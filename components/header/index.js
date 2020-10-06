@@ -3,11 +3,15 @@ import {include_tool} from '../../functions.js'
 customElements.define('header-button',class HeaderButton extends HTMLElement{
     constructor() {
         super()
+        const container = document.createElement('div')
+        include_tool(container)
         const content = this.getAttribute('content')
         const src = document.createElement('button')
         src.className = "btn bg-dark text-white"
         src.innerText = content
-        this.appendChild(src)
+        container.appendChild(src)
+        this.attachShadow({mode:'open'})
+        this.shadowRoot.appendChild(container)
     }
     
     connectedCallback() {
