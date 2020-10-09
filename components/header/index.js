@@ -1,4 +1,4 @@
-import {include_tool} from '../../functions.js'
+import {include_tool} from '../functions.js'
 
 customElements.define('custom-dropdown',class extends HTMLElement{
     constructor() {
@@ -35,7 +35,6 @@ customElements.define('header-button',class HeaderButton extends HTMLElement{
         this.attachShadow({mode:'open'})
         this.shadowRoot.appendChild(container)
     }
-    
     connectedCallback() {
         this.shadowRoot.addEventListener('mouseover',function(event){
             this.querySelector('div').className += "border-bottom border-primary"
@@ -75,35 +74,61 @@ customElements.define('custom-logo',class Logo extends HTMLElement{
 customElements.define('custom-header', class Header extends HTMLElement {
     constructor() {
         super()
+        this.dropdown = this.dropdown.bind(this)
+        this.unDropdown = this.unDropdown.bind(this)
+
         const container = document.createElement('div')
         include_tool(container)
-        // container.insertAdjacentHTML('beforeend',`  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script> <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/> <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>`)
         container.insertAdjacentHTML('afterbegin',`
             <div class='navbar bg-dark navbar-dark'>
                 <div>
                     <header-button goto='index' content='logo'/>
                 </div>
                 <div class='nav'>
-                    <header-button goto='buy_ticket' content="Phim">
+                    <header-button dropdown='movie' goto='buy_ticket' content="Phim">
                     </header-button>
-                    <header-button goto='buy_ticket' content="Rạp">
+                    <header-button dropdown='theater' goto='buy_ticket' content="Rạp">
                     </header-button>
-                    <header-button goto='buy_ticket' content="Thức ăn & nước uống">
+                    <header-button dropdown='food' goto='buy_ticket' content="Thức ăn & nước uống">
                     </header-button>
                 </div>
                 <div>
                     <header-button goto='buy_ticket' content='Mua vé ngay'/>
                 </div>
             </div>
-
-            
+            <div id='dropdown'>
+                <div id='theater' style='display:none' class='bg-danger'>
+                    Rap dropdown
+                </div>
+                <div id='food' style='display:none' class='bg-warning'>
+                    Food drop down
+                </div>
+                <div id='movie' style='display:none' class='bg-primary'>
+                    Movie drop down
+                </div>
+            </div>
         `)
 
         this.attachShadow({mode:'open'})
         this.shadowRoot.appendChild(container)
        }
+    dropdown(e) {
+        const dropdown = e.currentTarget.attributes.dropdown.value
+        const query = '#dropdown div#'+dropdown
+        $(query,this.shadowRoot).show()
+    }
+    unDropdown(e) {
+        const dropdown = e.currentTarget.attributes.dropdown.value
+        const query = '#dropdown div#'+dropdown
+        $(query,this.shadowRoot).hide()
+    }
     connectedCallback() {
-
+        $('.nav header-button',this.shadowRoot).each( (value,item) => {
+            item.addEventListener('mouseover',this.dropdown)
+        })
+        $('.nav header-button',this.shadowRoot).each( (value,item) => {
+            item.addEventListener('mouseout',this.unDropdown)
+        })
     }
 })
 
