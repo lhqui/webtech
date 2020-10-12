@@ -29,7 +29,9 @@ customElements.define('header-button',class HeaderButton extends HTMLElement{
         src.href = "./"+goto+".html"
         src.className = "btn bg-dark text-white"
         src.innerText = content
-
+        src.style.fontFamily = '"Lucida Sans Unicode", "Lucida Grande", sans-serif'
+        src.style.fontSize = '18px'
+        src.style.fontWeight = 'bold'
         container.appendChild(src)
 
         this.attachShadow({mode:'open'})
