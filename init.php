@@ -6,16 +6,7 @@ $GLOBALS['config'] = array(
         'servername' => '127.0.0.1',
         'username' => 'root',
         'password' => '',
-        'database' => 'nlcs'
-    ),
-    'remember' => array(
-        'cookie_name' => 'hash',
-        'cookie_expiry' => 604800
-    ),
-    'session' => array(
-        'session_name' => 'user',
-        'token_name' => 'token',
-        'admin' => 'admin'
+        'database' => 'vgc'
     ),
 );
 
