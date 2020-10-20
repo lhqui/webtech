@@ -24,6 +24,10 @@ class DB {
 
         return self::$_instance;
     }
+    public function everythingOk()
+    {
+        return !$this->_error && $this->_count!=0;
+    }
     public function query($sql,$params = array())
     {
         $this->_error = false;
