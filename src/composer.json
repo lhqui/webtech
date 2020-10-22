@@ -1,0 +1,12 @@
+{
+    "name": "webtech/vgc",
+    "description": "Website dat ve phim",
+    "require": {
+        "noahbuscher/macaw": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Classes\\": "./classes"
+        }
+    }
+}

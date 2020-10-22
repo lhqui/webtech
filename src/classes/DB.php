@@ -1,4 +1,5 @@
 <?php
+namespace Classes;
 class DB {
     private static $_instance = null;
     private $_pdo,
