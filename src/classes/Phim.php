@@ -1,4 +1,5 @@
 <?php
+namespace Classes;
 class Phim {
     public $data;
     private function __construct($id) {

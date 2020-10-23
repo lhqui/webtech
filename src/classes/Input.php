@@ -1,4 +1,5 @@
-<?php 
+<?php
+namespace Classes;
 class Input {
     public static function exist($type='post')
     {

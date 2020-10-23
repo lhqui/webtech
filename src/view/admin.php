@@ -1,12 +1,12 @@
 <html>
     <head>
         <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
-        <script src='./jquery.form.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js'></script>
     </head>
     <body>
         <div id='movie_manage'>
             <div id='movie_input'>
-                <form id='movie_input_form' action='functions/add_movie.php' method='post'>
+                <form id='movie_input_form' action='/functions/add_movie.php' method='post'>
                     <label for='ten_phim'>Tên phim</label>
                     <input type='text' name='ten_phim'></input>
                     <label for='mieu_ta'>Miêu tả</label>
@@ -29,7 +29,7 @@
                         $('#movie_input_form').on('submit',function(e){
                             e.preventDefault()
                             $(this).ajaxSubmit(function(data){
-                                alert('hey' + data)
+                                alert(data);
                             })
                         })
                     })

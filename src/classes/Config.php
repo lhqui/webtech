@@ -1,4 +1,5 @@
 <?php 
+namespace Classes;
 class Config {
     public static function get($path=null) {
         if($path)

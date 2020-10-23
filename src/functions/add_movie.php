@@ -1,5 +1,7 @@
-<?php 
-    require 'init.php';
+<?php
+    require '../init.php';
+    use Classes\Input;
+    use Classes\DB;
     if(Input::exist()) {
         $db = DB::getInstance();
         $db->insert('phim',array(
@@ -13,7 +15,10 @@
         ));
         if(!$db->error())
         {
-            echo 'good';
+            print_r('Them phim thanh cong');
         }
+        else
+            print_r($db->errorMsg());
+
     }
 ?>

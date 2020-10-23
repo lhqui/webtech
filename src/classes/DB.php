@@ -1,20 +1,25 @@
 <?php
 namespace Classes;
+use Classes\Config;
 class DB {
     private static $_instance = null;
     private $_pdo,
             $_error = false,
             $_query,
+            $_errorMsg,
             $_results,
             $_count = 0;
     private function __construct() 
     {
         try {
-            $this->_pdo = new PDO('mysql:host='.Config::get('mysql/servername') . ';dbname=' . Config::get('mysql/database') , Config::get('mysql/username'), Config::get('mysql/password'));
+            $this->_pdo = new \PDO('mysql:host='.Config::get('mysql/servername') . ';dbname=' . Config::get('mysql/database') , Config::get('mysql/username'), Config::get('mysql/password'));
         }
         catch(PDOException $e ) {
             die($e->getMessage());
         }
+    }
+    public function errorMsg() {
+        return $this->_errorMsg;
     }
     public static function getInstance()
     {
@@ -47,12 +52,13 @@ class DB {
             if($this->_query->execute())
             {
                 //echo $this->_query->debugDumpParams();   
-                $this->_results=$this->_query->fetchAll(PDO::FETCH_OBJ);
+                $this->_results=$this->_query->fetchAll(\PDO::FETCH_OBJ);
                 $this->_count=$this->_query->rowCount();
             }
             else
             {
                 $this->_error=true;
+                $this->_errorMsg = $this->_query->errorInfo();
             }
         }
         
