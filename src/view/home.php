@@ -9,22 +9,21 @@
         <custom-header></custom-header>
             
         <movie-carousel>
-            <?php
-                foreach($ds_phim as $movie)
-                {
-                    echo "
-                    <template>
-                        <div class='movie'>
-                            <img src='data:image/png;base64,"    . base64_encode($movie->_data->PHIM_ANHBIA) . "'></img>
-                            <div class='content'> 
-                                <h4>ABC</h4>
-                                <p>ASDASJHD</p>
+            <template>
+                <?php
+                    foreach($ds_phim as $movie)
+                    {
+                        echo "
+                            <div class='movie'>
+                                <img src='data:image/png;base64,"    . base64_encode($movie->_data->phim_anhbia) . "'></img>
+                                <div class='content'> 
+                                    <h4>".$movie->_data->phim_ten."</h4>
+                                </div>
                             </div>
-                        </div>
-                    </template>
-                    ";
-                }
-            ?>
+                        ";
+                    }
+                ?>
+            </template>
         </movie-carousel>
 
        

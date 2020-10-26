@@ -16,11 +16,18 @@ class Phim {
         if($db->everythingOk()) {
             foreach($db->result() as $result)
             {
-                $movie = new Phim($result->PHIM_ID);
+                $movie = new Phim($result->phim_id);
                 array_push($movieList,$movie);
             }
             return $movieList;
         }
+    }
+    public static function add($data) {
+        $db = DB::getInstance();
+        if($db->insert('phim',$data)) 
+            return true;
+        else
+            return false;
     }
 }
 ?>

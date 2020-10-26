@@ -7,7 +7,7 @@ customElements.define('movie-carousel',class MovieCarousel extends HTMLElement{
         const container = document.createElement('div')
         $('.movie',this.children[0].content).each(function(elem,value) {
             
-            $(container).html("<img src='"+$('img',this).attr('src')+"'></img>")
+            $(container).append("<img width='800px' height='300px' src='"+$('img',this).attr('src')+"'></img>")
             // console.log($('img',this).attr('src'))
         })
         this.shadowRoot.append(container)
