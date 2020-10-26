@@ -1,203 +1,203 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     10/22/2020 6:25:27 PM                        */
+/* Created on:     10/23/2020 10:44:10 PM                       */
 /*==============================================================*/
 
+TESTING
+drop table if exists binhluan;
 
-drop table if exists BINHLUAN;
+drop table if exists ghe;
 
-drop table if exists GHE;
+drop table if exists khuyenmai;
 
-drop table if exists KHUYENMAI;
+drop table if exists loaisuatchieu;
 
-drop table if exists LOAISUATCHIEU;
+drop table if exists muave;
 
-drop table if exists MUAVE;
+drop table if exists phim;
 
-drop table if exists PHIM;
+drop table if exists phong;
 
-drop table if exists PHONG;
+drop table if exists rap;
 
-drop table if exists RAP;
+drop table if exists suatchieu;
 
-drop table if exists SUATCHIEU;
+drop table if exists user;
 
-drop table if exists USER;
-
-drop table if exists VE;
+drop table if exists ve;
 
 /*==============================================================*/
-/* Table: BINHLUAN                                              */
+/* Table: binhluan                                              */
 /*==============================================================*/
-create table BINHLUAN
+create table binhluan
 (
-   USERNAME             varchar(50) not null,
-   MUAVE_STT            int not null,
-   BINHLUAN_NOIDUNG     varchar(200) not null,
-   BINHLUAN_DIEM        int not null,
-   primary key (USERNAME, MUAVE_STT)
+   username             varchar(50) not null,
+   muave_stt            int not null,
+   binhluan_noidung     varchar(200) not null,
+   binhluan_diem        int not null,
+   primary key (username, muave_stt)
 );
 
 /*==============================================================*/
-/* Table: GHE                                                   */
+/* Table: ghe                                                   */
 /*==============================================================*/
-create table GHE
+create table ghe
 (
-   GHE_HANG             varchar(1) not null,
-   GHE_STT              int not null,
-   primary key (GHE_HANG, GHE_STT)
+   ghe_hang             varchar(1) not null,
+   ghe_stt              int not null,
+   primary key (ghe_hang, ghe_stt)
 );
 
 /*==============================================================*/
-/* Table: KHUYENMAI                                             */
+/* Table: khuyenmai                                             */
 /*==============================================================*/
-create table KHUYENMAI
+create table khuyenmai
 (
-   KHUYENMAI_ID         int not null,
-   USERNAME             varchar(50) not null,
-   KHUYENMAI_PHANTRAM   float(2) not null,
-   KHUYENMAI_DASUDUNG   bool not null,
-   primary key (KHUYENMAI_ID)
+   khuyenmai_id         int not null auto_increment,
+   username             varchar(50) not null,
+   khuyenmai_phantram   float(2) not null,
+   khuyenmai_dasudung   bool not null,
+   primary key (khuyenmai_id)
 );
 
 /*==============================================================*/
-/* Table: LOAISUATCHIEU                                         */
+/* Table: loaisuatchieu                                         */
 /*==============================================================*/
-create table LOAISUATCHIEU
+create table loaisuatchieu
 (
-   LOAISUATCHIEU_ID     int not null,
-   LOAI_KHUNGGIO_START  int not null,
-   LOAI_KHUNGGIO_END    int not null,
-   LOAI_KHUNGNGAY       int,
-   LOAI_GIA             int not null,
-   primary key (LOAISUATCHIEU_ID)
+   loaisuatchieu_id     int not null,
+   loai_khunggio_start  int not null,
+   loai_khunggio_end    int not null,
+   loai_khungngay       int,
+   loai_gia             int not null,
+   primary key (loaisuatchieu_id)
 );
 
 /*==============================================================*/
-/* Table: MUAVE                                                 */
+/* Table: muave                                                 */
 /*==============================================================*/
-create table MUAVE
+create table muave
 (
-   USERNAME             varchar(50) not null,
-   MUAVE_STT            int not null,
-   RAP_ID               int not null,
-   PHONG_STT            int not null,
-   SUATCHIEU_THOIDIEM   datetime not null,
-   KHUYENMAI_ID         int,
-   MUAVE_SOLUONG        int not null,
-   MUAVE_THOIDIEM       datetime not null,
-   MUAVE_TONGTIEN       int not null,
-   primary key (USERNAME, MUAVE_STT)
+   username             varchar(50) not null,
+   muave_stt            int not null,
+   rap_id               int not null,
+   phong_stt            int not null,
+   suatchieu_thoidiem   datetime not null,
+   khuyenmai_id         int,
+   muave_soluong        int not null,
+   muave_thoidiem       datetime not null,
+   muave_tongtien       int not null,
+   primary key (username, muave_stt)
 );
 
 /*==============================================================*/
-/* Table: PHIM                                                  */
+/* Table: phim                                                  */
 /*==============================================================*/
-create table PHIM
+create table phim
 (
-   PHIM_ID              int not null,
-   PHIM_TEN             varchar(50) not null,
-   PHIM_MIEUTA          varchar(2000) not null,
-   PHIM_ANHBIA          longblob not null,
-   PHIM_THOILUONG       int not null,
-   PHIM_GIA             int not null,
-   PHIM_NGAYSX          date not null,
-   PHIM_NGAYCHIEU       date not null,
-   primary key (PHIM_ID)
+   phim_id              int not null auto_increment,
+   phim_ten             varchar(50) not null,
+   phim_mieuta          varchar(2000) not null,
+   phim_anhbia          longblob not null,
+   phim_thoiluong       int not null,
+   phim_gia             int not null,
+   phim_ngaysx          date not null,
+   phim_ngaychieu       date not null,
+   primary key (phim_id)
 );
 
 /*==============================================================*/
-/* Table: PHONG                                                 */
+/* Table: phong                                                 */
 /*==============================================================*/
-create table PHONG
+create table phong
 (
-   RAP_ID               int not null,
-   PHONG_STT            int not null,
-   primary key (RAP_ID, PHONG_STT)
+   rap_id               int not null,
+   phong_stt            int not null,
+   primary key (rap_id, phong_stt)
 );
 
 /*==============================================================*/
-/* Table: RAP                                                   */
+/* Table: rap                                                   */
 /*==============================================================*/
-create table RAP
+create table rap
 (
-   RAP_ID               int not null,
-   RAP_TEN              varchar(50) not null,
-   RAP_DIACHI           varchar(200),
-   primary key (RAP_ID)
+   rap_id               int not null,
+   rap_ten              varchar(50) not null,
+   rap_diachi           varchar(200),
+   primary key (rap_id)
 );
 
 /*==============================================================*/
-/* Table: SUATCHIEU                                             */
+/* Table: suatchieu                                             */
 /*==============================================================*/
-create table SUATCHIEU
+create table suatchieu
 (
-   RAP_ID               int not null,
-   PHONG_STT            int not null,
-   SUATCHIEU_THOIDIEM   datetime not null,
-   PHIM_ID              int not null,
-   LOAISUATCHIEU_ID     int not null,
-   primary key (RAP_ID, PHONG_STT, SUATCHIEU_THOIDIEM)
+   rap_id               int not null,
+   phong_stt            int not null,
+   suatchieu_thoidiem   datetime not null,
+   phim_id              int not null,
+   loaisuatchieu_id     int not null,
+   primary key (rap_id, phong_stt, suatchieu_thoidiem)
 );
 
 /*==============================================================*/
-/* Table: USER                                                  */
+/* Table: user                                                  */
 /*==============================================================*/
-create table USER
+create table user
 (
-   USERNAME             varchar(50) not null,
-   PASSWORD             varchar(50) not null,
-   primary key (USERNAME)
+   username             varchar(50) not null,
+   password             varchar(50) not null,
+   primary key (username)
 );
 
 /*==============================================================*/
-/* Table: VE                                                    */
+/* Table: ve                                                    */
 /*==============================================================*/
-create table VE
+create table ve
 (
-   RAP_ID               int not null,
-   PHONG_STT            int not null,
-   SUATCHIEU_THOIDIEM   datetime not null,
-   GHE_HANG             varchar(1) not null,
-   GHE_STT              int not null,
-   USERNAME             varchar(50) not null,
-   MUAVE_STT            int not null,
-   primary key (RAP_ID, PHONG_STT, SUATCHIEU_THOIDIEM, GHE_HANG, GHE_STT, USERNAME, MUAVE_STT)
+   rap_id               int not null,
+   phong_stt            int not null,
+   suatchieu_thoidiem   datetime not null,
+   ghe_hang             varchar(1) not null,
+   ghe_stt              int not null,
+   username             varchar(50) not null,
+   muave_stt            int not null,
+   primary key (rap_id, phong_stt, suatchieu_thoidiem, ghe_hang, ghe_stt, username, muave_stt)
 );
 
-alter table BINHLUAN add constraint FK_BINH_LUAN_SAU_KHI_MUA foreign key (USERNAME, MUAVE_STT)
-      references MUAVE (USERNAME, MUAVE_STT) on delete restrict on update restrict;
+alter table binhluan add constraint FK_binh_luan_sau_khi_mua foreign key (username, muave_stt)
+      references muave (username, muave_stt) on delete restrict on update restrict;
 
-alter table KHUYENMAI add constraint FK_USER_CO_KM foreign key (USERNAME)
-      references USER (USERNAME) on delete restrict on update restrict;
+alter table khuyenmai add constraint FK_user_co_km foreign key (username)
+      references user (username) on delete restrict on update restrict;
 
-alter table MUAVE add constraint FK_AP_DUNG_KM foreign key (KHUYENMAI_ID)
-      references KHUYENMAI (KHUYENMAI_ID) on delete restrict on update restrict;
+alter table muave add constraint FK_ap_dung_km foreign key (khuyenmai_id)
+      references khuyenmai (khuyenmai_id) on delete restrict on update restrict;
 
-alter table MUAVE add constraint FK_MUA_VE foreign key (USERNAME)
-      references USER (USERNAME) on delete restrict on update restrict;
+alter table muave add constraint FK_mua_ve foreign key (username)
+      references user (username) on delete restrict on update restrict;
 
-alter table MUAVE add constraint FK_SUAT_NAO foreign key (RAP_ID, PHONG_STT, SUATCHIEU_THOIDIEM)
-      references SUATCHIEU (RAP_ID, PHONG_STT, SUATCHIEU_THOIDIEM) on delete restrict on update restrict;
+alter table muave add constraint FK_suat_nao foreign key (rap_id, phong_stt, suatchieu_thoidiem)
+      references suatchieu (rap_id, phong_stt, suatchieu_thoidiem) on delete restrict on update restrict;
 
-alter table PHONG add constraint FK_PHONG_THUOC_RAP foreign key (RAP_ID)
-      references RAP (RAP_ID) on delete restrict on update restrict;
+alter table phong add constraint FK_phong_thuoc_rap foreign key (rap_id)
+      references rap (rap_id) on delete restrict on update restrict;
 
-alter table SUATCHIEU add constraint FK_CHIEU_TAI_PHONG foreign key (RAP_ID, PHONG_STT)
-      references PHONG (RAP_ID, PHONG_STT) on delete restrict on update restrict;
+alter table suatchieu add constraint FK_chieu_tai_phong foreign key (rap_id, phong_stt)
+      references phong (rap_id, phong_stt) on delete restrict on update restrict;
 
-alter table SUATCHIEU add constraint FK_GIA_SUAT_CHIEU foreign key (LOAISUATCHIEU_ID)
-      references LOAISUATCHIEU (LOAISUATCHIEU_ID) on delete restrict on update restrict;
+alter table suatchieu add constraint FK_gia_suat_chieu foreign key (loaisuatchieu_id)
+      references loaisuatchieu (loaisuatchieu_id) on delete restrict on update restrict;
 
-alter table SUATCHIEU add constraint FK_RELATIONSHIP_4 foreign key (PHIM_ID)
-      references PHIM (PHIM_ID) on delete restrict on update restrict;
+alter table suatchieu add constraint FK_relationship_4 foreign key (phim_id)
+      references phim (phim_id) on delete restrict on update restrict;
 
-alter table VE add constraint FK_DANH_SACH_VE foreign key (USERNAME, MUAVE_STT)
-      references MUAVE (USERNAME, MUAVE_STT) on delete restrict on update restrict;
+alter table ve add constraint FK_danh_sach_ve foreign key (username, muave_stt)
+      references muave (username, muave_stt) on delete restrict on update restrict;
 
-alter table VE add constraint FK_GHE_CUA_VE foreign key (GHE_HANG, GHE_STT)
-      references GHE (GHE_HANG, GHE_STT) on delete restrict on update restrict;
+alter table ve add constraint FK_ghe_cua_ve foreign key (ghe_hang, ghe_stt)
+      references ghe (ghe_hang, ghe_stt) on delete restrict on update restrict;
 
-alter table VE add constraint FK_VE_THUOC_SUAT_CHIEU foreign key (RAP_ID, PHONG_STT, SUATCHIEU_THOIDIEM)
-      references SUATCHIEU (RAP_ID, PHONG_STT, SUATCHIEU_THOIDIEM) on delete restrict on update restrict;
+alter table ve add constraint FK_ve_thuoc_suat_chieu foreign key (rap_id, phong_stt, suatchieu_thoidiem)
+      references suatchieu (rap_id, phong_stt, suatchieu_thoidiem) on delete restrict on update restrict;
 
