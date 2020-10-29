@@ -1,8 +1,8 @@
 <?php
 namespace Classes;
 class Phim {
-    public $data;
-    private function __construct($id) {
+    public $_data;
+    public function __construct($id) {
         $db = DB::getInstance();
         $db->get('phim',array('phim_id','=',$id));
         if($db->everythingOk()) {
@@ -28,6 +28,9 @@ class Phim {
             return true;
         else
             return false;
+    }
+    public function img() {
+        return "data:image/png;base64,"    . base64_encode($this->_data->phim_anhbia) ;
     }
 }
 ?>
