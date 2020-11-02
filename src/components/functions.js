@@ -23,6 +23,12 @@ export function getScripts(scripts, callback) {
     });
 }
 
+export function init() {
+    var script = new Array()
+    script[0] = document.createElement('script')
+    script[0].src = 'https://code.jquery.com/jquery-3.4.1.min.js'
+}
+
 // export function include_tool(src) {
 //     console.log(src)
 //     var jquery = document.createElement('script');

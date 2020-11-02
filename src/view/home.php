@@ -1,18 +1,14 @@
 <html>
     <head>
-        <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
-        <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/> 
-        <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+        <?php include 'header.php'?>
         <script type='module' src="/components/header/index.js"></script>
-        <script type='module' src="/components/movie-carousel/index.js"></script>
+        <script type='text/babel' src="/components/movie-carousel/index.js"></script>
         <!-- <script type='module' src='./components/ticket_buy/index.js'></script> -->
     </head>
     <body style='background-color:black'>
         <custom-header></custom-header>
 
-
-            
-        <movie-carousel>
+        <div id='movie-carousel'>
             <template>
                 <?php
                     foreach($ds_phim as $phim) {
@@ -25,7 +21,7 @@
                     }
                 ?>
             </template>
-        </movie-carousel>
+        </div>
 
 
         

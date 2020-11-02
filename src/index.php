@@ -8,7 +8,7 @@
     Macaw::get('phim/(:any)','Classes\\Router@phim');
     // Management system
     Macaw::get('manage','Classes\\Router@manage');
-    Macaw::get('manage/functions/(:any)','Classes\\Router@manage_function');
+    Macaw::get('functions/(:any)','Classes\\Router@functions');
     Macaw::dispatch();
 
 ?>
