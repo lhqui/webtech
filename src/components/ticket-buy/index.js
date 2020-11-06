@@ -1,7 +1,2 @@
-import {include_tool} from '../functions.js'
-
-customElements.define('ticket-buy',class TicketBuy extends HTMLElement {
-    constructor() {
-        
-    }
-})
+const domContainer = document.querySelector('ticket-buy')
+const template = domContainer.children[0].content

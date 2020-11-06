@@ -8,24 +8,16 @@
     <body style='background-color:black'>
         <custom-header></custom-header>
 
-        <div id='movie-carousel'>
+        <movie-carousel>
             <template>
                 <?php
                     foreach($ds_phim as $phim) {
-                        echo "
-                            <div class='phim'>
-                                <img src='".$phim->img()."'></img>
-                                <h4 class='phim_ten'>".$phim->_data->phim_ten."</h4>
-                            </div>
-                        ";
+                        $phim->template();
                     }
                 ?>
             </template>
-        </div>
+        </movie-carousel>
 
-
-        
-       
 
         <div>
             <footer></footer>

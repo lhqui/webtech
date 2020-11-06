@@ -32,5 +32,14 @@ class Phim {
     public function img() {
         return "data:image/png;base64,"    . base64_encode($this->_data->phim_anhbia) ;
     }
+    public function template() {
+        echo "
+            <div class='phim'>
+                <img src='".$this->img()."'></img>
+                <h4 class='phim_ten'>".$this->_data->phim_ten."</h4>
+                <div id='phim_mieuta'>".$this->_data->phim_mieuta."</div>
+            </div>
+        ";
+    }
 }
 ?>
