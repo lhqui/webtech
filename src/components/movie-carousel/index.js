@@ -1,12 +1,13 @@
+import MoviePoster from '../movie-poster/index'
 const domContainer = document.querySelector('movie-carousel')
 const template = domContainer.querySelector('template').content
 const movies = template.querySelectorAll('.phim')
 // img list
 const imgList = []
-template.querySelectorAll('img').forEach(function(elem,i){
+movies.forEach(function(elem,i){
     imgList.push(
         <div key={i} className={i==0?'carousel-item active':'carousel-item'}>
-            <img className="d-block w-100" src={elem.src}></img>
+            <MoviePoster template={this}></MoviePoster>
         </div>
     )
 })

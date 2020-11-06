@@ -1,10 +1,13 @@
 const dom = document.querySelectorAll('movie-poster')
-
-export class MoviePoster extends React.Component {
+export default class MoviePoster extends React.Component {
     constructor(props) {
         super(props)
     }
     render() {
-        
+        return(
+            <img className='d-block w-100' src={this.props.template.querySelector('img').src}>
+
+            </img>
+        )
     }
 }
