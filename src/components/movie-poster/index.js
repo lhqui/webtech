@@ -5,9 +5,9 @@ export default class MoviePoster extends React.Component {
     }
     render() {
         return(
-            <img className='d-block w-100' src={this.props.template.querySelector('img').src}>
-
-            </img>
+            <div>
+                <img className={this.props.class} src={this.props.template.querySelector('img').src}></img>
+            </div>
         )
     }
 }

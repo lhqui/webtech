@@ -17,7 +17,16 @@
                 ?>
             </template>
         </movie-carousel>
-
+        
+        <movie-picker>
+            <template>
+                <?php
+                    foreach($ds_phim as $phim) {
+                        $phim->template();
+                    }
+                ?>
+            </template>
+        </movie-picker>
 
         <div>
             <footer></footer>
