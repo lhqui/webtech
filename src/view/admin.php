@@ -6,7 +6,7 @@
     <body>
         <div id='movie_manage'>
             <div id='movie_input'>
-                <form id='movie_input_form' action='vgc.com/functions/add_movie.php' method='post'>
+                <form id='movie_input_form' action='/functions/add_movie.php' method='post'>
                     <label for='ten_phim'>Tên phim</label>
                     <input type='text' name='phim_ten'></input>
                     <label for='mieu_ta'>Miêu tả</label>

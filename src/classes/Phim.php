@@ -14,10 +14,13 @@ class Phim {
             // lay du lieu
             $this->_data = $db->first();
             // phim dang chieu hay sap chieu ?
-            $now = date('Y/m/d');
-            $interval = \date_diff(date_create($this->_data->phim_ngaychieu),date_create($now));
-            $interval=$interval->format("%a");
-            $interval > 0 ? $this->_dangchieu=true : $this->_dangchieu=false;
+            $now = new \DateTime(date('Y-m-d'));
+            $ngaychieu = new \DateTime($this->_data->phim_ngaychieu);        
+            if($ngaychieu>$now) {
+                $this->_dangchieu=0;
+            }
+            else
+                $this->_dangchieu=1;
         }
     }
     public static function getAll() {

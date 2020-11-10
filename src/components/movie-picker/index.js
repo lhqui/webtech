@@ -2,20 +2,31 @@ class MovieList extends React.Component {
     constructor(props)
     {
         super(props)
-        this.movies = this.props.phim.map(function(i,elem){
+        const newMovies = this.props.phim.map(function(i,elem){
             return(
                 <img onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img').src} key={i}></img>
             )
         })
+        this.state = {
+            movies:newMovies
+        }
+    }
+    static getDerivedStateFromProps(nextProp) {
+        const newMovies = nextProp.phim.map(function(i,elem){
+            return(
+                <img onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img').src} key={i}></img>
+            )
+        })
+        return {movies:newMovies}
     }
     render() {
         return(
             this.props.phim.length!=0 ? 
             <div className='row'>
-                {this.movies}
+                {this.state.movies}
             </div> : 
             <div>
-                <h1>Currently no movies</h1>
+                <h1 style={{color:'white'}}>Currently no movies</h1>
             </div>
         )
     }
@@ -29,9 +40,10 @@ export default class MoviePicker extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dangchieu:true
+            dangchieu:true,
         }
     }
+    
     render() {
         return(
             <div className='container'>
@@ -47,7 +59,7 @@ export default class MoviePicker extends React.Component {
                 </div>
                 <hr style={{border:'0'},{clear:'both'},{backgroundColor:'white'}}></hr>
                 <div className='mt-5'>
-                    {this.state.dangchieu?(<MovieList phim={phimdangchieu}/>):(<MovieList phim={phimsapchieu}/>)}
+                    <MovieList phim={this.state.dangchieu?phimdangchieu:phimsapchieu}></MovieList>
                 </div>
             </div>
             )
