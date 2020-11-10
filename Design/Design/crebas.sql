@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     11/10/2020 10:31:25 PM                       */
+/* Created on:     11/10/2020 10:45:00 PM                       */
 /*==============================================================*/
 
 
@@ -101,7 +101,6 @@ create table phim
    phim_anhbia          longblob not null,
    phim_thoiluong       int not null,
    phim_gia             int not null,
-   phim_ngaysx          date not null,
    phim_ngaychieu       date not null,
    phim_anh             longblob not null,
    primary key (phim_id)
