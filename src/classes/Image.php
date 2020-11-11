@@ -1,4 +1,5 @@
 <?php 
+namespace Classes;
 class Image {
     static function SaveImage($name,$uploadDir)
     {
@@ -17,7 +18,10 @@ class Image {
             return $pic;
         }
     }
-    
+    static function img($longblob) {
+        return "data:image/png;base64,"    . base64_encode($longblob) ;
+
+    }
 }
 
 ?>

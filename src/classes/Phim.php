@@ -43,13 +43,11 @@ class Phim {
         else
             return false;
     }
-    public function img() {
-        return "data:image/png;base64,"    . base64_encode($this->_data->phim_anhbia) ;
-    }
     public function template() {
         echo "
             <div data-dangchieu='".$this->_dangchieu."' class='phim' id='".$this->_data->phim_id."'>
-                <img src='".$this->img()."'></img>
+                <img id='phim_anhbia' src='".Image::img($this->_data->phim_anhbia)."'></img>
+                <img id='phim_anh' src='".Image::img($this->_data->phim_anh)."'></img>
                 <h4 class='phim_ten'>".$this->_data->phim_ten."</h4>
                 <div id='phim_mieuta'>".$this->_data->phim_mieuta."</div>
             </div>

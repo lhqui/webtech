@@ -11,14 +11,14 @@
                     <input type='text' name='phim_ten'></input>
                     <label for='mieu_ta'>Miêu tả</label>
                     <textarea form='movie_input_form' name='phim_mieuta'></textarea>
-                    <label for='anh_bia'>Ảnh bìa</label>
+                    <label for='anh_bia'>Ảnh bìa poster</label>
                     <input type='file' accept='image/*' name='phim_anhbia'></input>
+                    <label for='anh_bia'>Ảnh bìa dọc</label>
+                    <input type='file' accept='image/*' name='phim_anh'></input>
                     <label for='thoi_luong'>Thời lượng</label>
                     <input type='number' name='phim_thoiluong'></input>
                     <label for='gia'>Giá phim</label>
                     <input type='number' name='phim_gia'></input>
-                    <label for='ngay_sx'>Ngày sản xuất</label>
-                    <input type='date' name='phim_ngaysx'></input>
                     <label for='ngay_chieu'>Ngày chiếu</label>
                     <input type='date' name='phim_ngaychieu'></input>
                     
