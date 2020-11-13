@@ -1,6 +1,6 @@
 import MoviePoster from '../movie-poster/index.js'
 const dom = document.querySelector('movie-present')
-const template = document.querySelector('template#phim').content
+const template = dom.children[0].content.children[0]
 
  class MoviePresent extends React.Component {
     constructor(props) {
@@ -8,7 +8,7 @@ const template = document.querySelector('template#phim').content
     }
     render() {
         return(
-            <MoviePoster template={template}></MoviePoster>
+            <MoviePoster template={template} detail={true}></MoviePoster>
         )
     }
 }

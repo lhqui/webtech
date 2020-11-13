@@ -7,7 +7,7 @@ const imgList = []
 movies.forEach(function(elem,i){
     imgList.push(
         <div key={i} className={i==0?'carousel-item active':'carousel-item'}>
-            <MoviePoster class={'d-block w-100 h-50'} template={elem}></MoviePoster>
+            <MoviePoster  template={elem} detail={false} ></MoviePoster>
         </div>
     )
 })
