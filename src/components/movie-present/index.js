@@ -8,7 +8,7 @@ const template = document.querySelector('template#phim').content
     }
     render() {
         return(
-            <MoviePoster template={template}></MoviePoster>
+            <MoviePoster  template={template}></MoviePoster>
         )
     }
 }
