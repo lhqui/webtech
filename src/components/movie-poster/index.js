@@ -7,7 +7,7 @@ export default class MoviePoster extends React.Component {
         super(props)
         console.log(this.props.template)
     //   this.idphim = this.props.template.children[0].id
-    //     console.log(this.idphim)
+       console.log(this.props.template.querySelector('#phim_ten'))
     }
     render() {
         const outsideView = (   
@@ -20,6 +20,7 @@ export default class MoviePoster extends React.Component {
         const detailView = (
                     <span>
                         <img style={imstyleDe} className="responsive" src={this.props.template.querySelector('img#phim_anhbia').src}></img>
+                        <h1>Ten phim: {this.props.template.querySelector('#phim_ten').innerHTML}</h1>
                     </span>
         )
         return(

@@ -21,9 +21,7 @@ movies.forEach((elem,i)=>{
 class MovieCarousel extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            
-        }
+        
         // $('.carousel-indicator:first-child',this).addClass('active')
         // $('.carousel-inner:first-child',this).addClass('active')
     }
@@ -31,18 +29,18 @@ class MovieCarousel extends React.Component {
         return (
             <div>
                 <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                    <ol className="carousel-indicators">
+                    <ol className="carousel-indicators" >
                         {indicators}
                     </ol>
                     <div className="carousel-inner">
                         {imgList}
                     </div>
-                    <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <a className="carousel-control-prev" style={{ top:"400px", left:"30%"}} href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="sr-only">Previous</span>
                     </a>
                     
-                    <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <a className="carousel-control-next" style={{top:"400px",right:"30%"}} href="#carouselExampleIndicators" role="button" data-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="sr-only">Next</span>
                     </a>
