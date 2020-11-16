@@ -1,42 +1,70 @@
 class MovieList extends React.Component {
     constructor(props)
     {
-        function createCard(e) {
-            return (
-                <div class="carview overlay zoom" >
-                    <img class="img-fluid" src={this.pros.template.querySelector('img#phim_id'.src)} alt="Card image cap"></img>
-                    <div class="card-bodymask flex-center">
-                    <button className="btn btn-primary"  onClick={()=>{window.location.href='./phim/'+ this.props.template.id}}>Dat ve</button>
-                    </div>
-                </div>
-            )
+        // function createCard(e) {
+        //     return (
+        //         <div class="carview overlay zoom" >
+        //             <img class="img-fluid" src={this.pros.template.querySelector('img#phim_id'.src)} alt="Card image cap"></img>
+        //             <div class="card-bodymask flex-center">
+        //             <button className="btn btn-primary"  onClick={()=>{window.location.href='./phim/'+ this.props.template.id}}>Dat ve</button>
+        //             </div>
+        //         </div>
+        //     )
             
-        }
+        // }
         super(props)
         const newMovies = this.props.phim.map(function(i,elem){
             return(
                 <img onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} 
-                onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)';createCard(e) }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
+                onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
             )
         })
-        this.state = {
-            movies:newMovies
+        const style = {
+            active:{
+                transform: "scale(1.05)",
+                boxShadow: "0px 0px 0px 10px rgba(255,255,255,1), 1px 11px 15px 10px rgba(0,0,0,0.4)",
+                zIndex: "100",
+                opacity: "1",
+            },
+            blur:{  
+                transform: "scale(0.9)",
+                boxShadow: "0px 0px 20px 10px rgba(255,255,255,1);",
+                zIndex: "100",
+                opacity: "0.7",
+            }
         }
-    }
-    static getDerivedStateFromProps(nextProp) {
-        const newMovies = nextProp.phim.map(function(i,elem){
+        this.state = {
+            hover:false
+        }
+        function handleMouseIn(e) {
+            console.log(e)
+        }
+        function handleMouseOut(e) {
+            console.log(e)
+        }
+        this.movies = this.props.phim.map(function(i,elem){
             return(
-                <img onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
+                <div key={i}>
+                    <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{handleMouseIn(e)}} onMouseOver={(e) => {handleMouseOut(e)}} width={150} height={200} src={elem.querySelector('img#phim_anh').src} key={i}></img>
+                </div>
             )
         })
-        return {movies:newMovies}
     }
-   
+    
+    
+    // static getDerivedStateFromProps(nextProp) {
+    //     const newMovies = nextProp.phim.map(function(i,elem){
+    //         return(
+    //             <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
+    //         )
+    //     })
+    //     return {movies:newMovies}
+    // }
     render() {
         return(
             this.props.phim.length!=0 ? 
             <div className='row'>
-                {this.state.movies}
+                {this.movies}
             </div> : 
             <div>
                 <h1 style={{color:'white'}}>Currently no movies</h1>
@@ -52,6 +80,7 @@ const phimsapchieu = $("div.phim[data-dangchieu='0']",template)
 export default class MoviePicker extends React.Component {
     constructor(props) {
         super(props)
+        this.handleClick=this.handleClick.bind(this)
         this.state = {
             dangchieu:true,
         }
