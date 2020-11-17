@@ -48,7 +48,7 @@ class Phim {
             <div data-dangchieu='".$this->_dangchieu."' class='phim' id='".$this->_data->phim_id."'>
                 <img id='phim_anhbia' src='".Image::img($this->_data->phim_anhbia)."'></img>
                 <img id='phim_anh' src='".Image::img($this->_data->phim_anh)."'></img>
-                <h4 class='phim_ten'>".$this->_data->phim_ten."</h4>
+                <h4 id='phim_ten'>".$this->_data->phim_ten."</h4>
                 <div id='phim_mieuta'>".$this->_data->phim_mieuta."</div>
             </div>
         ";

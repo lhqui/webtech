@@ -8,7 +8,7 @@ class CustomHeader extends React.Component {
         this.handleMouseIn = this.handleMouseIn.bind(this)
         this.handleMouseOut = this.handleMouseOut.bind(this)
         this.style = {
-            backgroundColor:'red'
+            backgroundColor:'black'
         }
     }
     

@@ -2,48 +2,59 @@ class MovieList extends React.Component {
     constructor(props)
     {
         super(props)
-        const style = {
+        this.style = {
+            normal: {
+                cursor: "pointer",
+                filter:'brightness(1.15)',
+                transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
+
+            },
             active:{
-                transform: "scale(1.05)",
-                boxShadow: "0px 0px 0px 10px rgba(255,255,255,1), 1px 11px 15px 10px rgba(0,0,0,0.4)",
+                transform: "scale(1,1.01)",
+                boxShadow: "0px 0px 0px 10px black, 1px 11px 15px 10px rgba(0,0,0,0.8)",
                 zIndex: "100",
                 opacity: "1",
+                cursor: "pointer",
+                filter:'brightness(1.5)',
+                transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
             },
-            blur:{  
+            blur:{
                 transform: "scale(0.9)",
-                boxShadow: "0px 0px 20px 10px rgba(255,255,255,1);",
+                boxShadow: "0px 0px 20px 10px black",
                 zIndex: "100",
-                opacity: "0.7",
-            }
+                opacity: "0.5",
+                transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
+            },
         }
         this.state = {
-            hover:false
+            hover:false,
+            currentHover:0
         }
-        function handleMouseIn(e) {
-            console.log(e)
-        }
-        function handleMouseOut(e) {
-            console.log(e)
-        }
-        this.movies = this.props.phim.map(function(i,elem){
+    }
+    createMovieList() {
+        this.movies = this.props.phim.map((i,elem)=>{
             return(
-                <div key={i}>
-                    <img onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{handleMouseIn(e)}} onMouseOver={(e) => {handleMouseOut(e)}} width={150} height={200} src={elem.querySelector('img#phim_anh').src} key={i}></img>
+                <div className="m-3 col-2 " style={{textAlign:'center'}} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e) => {this.handleMouseIn(e)}} key={i} style={!this.state.hover?this.style.normal:this.state.currentHover==i?this.style.active:this.style.blur}>
+                    <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}}  width={200} height={280} src={elem.querySelector('img#phim_anh').src} key={i} data-key={i}></img>
+                    <div className="text-white mt-3 ml-5 d-flex justify-content-center">
+                        <h4>
+                            {elem.querySelector('#phim_ten').innerHTML}
+                        </h4>
+                    </div>
                 </div>
             )
         })
     }
-    
-    
-    // static getDerivedStateFromProps(nextProp) {
-    //     const newMovies = nextProp.phim.map(function(i,elem){
-    //         return(
-    //             <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
-    //         )
-    //     })
-    //     return {movies:newMovies}
-    // }
+    handleMouseIn(e) {
+        this.setState({currentHover:e.target.getAttribute('data-key')})
+        this.setState({hover:true})
+    }
+    handleMouseOut(e) {
+        this.setState({hover:false})
+        this.setState({currentHover:null})
+    }
     render() {
+        this.createMovieList()
         return(
             this.props.phim.length!=0 ? 
             <div className='row'>
