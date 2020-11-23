@@ -5,11 +5,13 @@
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src='/components/movie-poster/index.js'></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-carousel/index.js"></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-picker/index.js"></script>
-        <link type='stylesheet' src='./components/custom-header/style.css'>
     </head>
     <body style='background-color:black'>
-        <custom-header></custom-header>
-
+        <template id='user'>
+            
+        </template>
+        <custom-header>
+        </custom-header>
         <movie-carousel>
             <template>
                 <?php
@@ -20,15 +22,17 @@
             </template>
         </movie-carousel>
         
-        <movie-picker>
-            <template>
-                <?php
-                    foreach($ds_phim as $phim) {
-                        $phim->template();
-                    }
-                ?>
-            </template>
-        </movie-picker>
+        <div class="mt-5">
+            <movie-picker>
+                <template>
+                    <?php
+                        foreach($ds_phim as $phim) {
+                            $phim->template();
+                        }
+                    ?>
+                </template>
+            </movie-picker>
+        </div>
 
         <div>
             <footer></footer>

@@ -36,7 +36,7 @@ class MovieList extends React.Component {
             return(
                 <div className="m-3 col-2 " style={{textAlign:'center'}} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e) => {this.handleMouseIn(e)}} key={i} style={!this.state.hover?this.style.normal:this.state.currentHover==i?this.style.active:this.style.blur}>
                     <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}}  width={200} height={280} src={elem.querySelector('img#phim_anh').src} key={i} data-key={i}></img>
-                    <div className="text-white mt-3 ml-5 d-flex justify-content-center">
+                    <div className="text-white mt-3 d-flex justify-content-center">
                         <h4>
                             {elem.querySelector('#phim_ten').innerHTML}
                         </h4>
@@ -77,18 +77,36 @@ export default class MoviePicker extends React.Component {
         this.state = {
             dangchieu:true,
         }
+        this.style = {
+            buttonClassName:"btn-primary-outline btn",
+            header: {
+                fontFamily:"monaco, Consolas, Lucida Console",
+                color:'white'
+            },
+            activeButton:{
+                fontFamily:"monaco, Consolas, Lucida Console",
+                color:'#34b4eb',
+                fontSize:"20px"
+            },
+            inactiveButton:{
+                fontFamily:"monaco, Consolas, Lucida Console",
+                color:'white',
+                fontSize:"20px"
+            }
+
+        }
     }
     
     render() {
         return(
-            <div className='container'>
+            <div className="m-5 p-5">
                 <div className='title row'>
-                    <h1 style={{color:'white'}}>
-                        Phim
-                    </h1>
+                    <h2 style={this.style.header}>
+                        Phim tại VGC
+                    </h2>
                     <div className='ml-auto'>
-                        <button onClick={()=>this.setState({dangchieu:true})}>  Đang chiếu </button>
-                        <button onClick={()=>this.setState({dangchieu:false})}>  Sắp chiếu </button>
+                        <button onClick={()=>this.setState({dangchieu:true})} className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Đang chiếu </button>
+                        <button onClick={()=>this.setState({dangchieu:false})} className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
                         {/* <button onClick={()=>{this.setState({dangchieu:false}); console.log(this)}}>test</button> */}
                     </div>
                 </div>

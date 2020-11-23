@@ -7,7 +7,7 @@ const imgList = []
 movies.forEach(function(elem,i){
     imgList.push(
         <div key={i} className={i==0?'carousel-item active':'carousel-item'}>
-            <MoviePoster class={'d-block w-100 h-50'} template={elem}></MoviePoster>
+            <MoviePoster template={elem}></MoviePoster>
         </div>
     )
 })
@@ -37,7 +37,7 @@ class MovieCarousel extends React.Component {
                     <div className="carousel-inner">
                         {imgList}
                     </div>
-                    <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    {/* <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="sr-only">Previous</span>
                     </a>
@@ -45,7 +45,7 @@ class MovieCarousel extends React.Component {
                     <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="sr-only">Next</span>
-                    </a>
+                    </a> */}
                 </div>
             </div>
         );

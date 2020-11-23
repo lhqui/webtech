@@ -6,3 +6,5 @@
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js'></script>
+<script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/user-modal/index.js"></script>
+<user-modal></user-modal>

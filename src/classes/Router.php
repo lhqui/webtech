@@ -4,6 +4,7 @@
     class Router {
         public function index() {
             $ds_phim = Phim::getAll();
+            // $user = new User();
             include './view/home.php';
         }
         public function view($page) {
