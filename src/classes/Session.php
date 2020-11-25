@@ -1,4 +1,5 @@
 <?php 
+namespace Classes;
 class Session {
     public static function put($key,$value)
     {

@@ -21,6 +21,18 @@ class TheaterAdder extends React.Component {
         )
     }
 }
+class TheaterList extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        return(
+            <div>
+                list
+            </div>
+        )
+    }
+}
 class TheaterManager extends React.Component {
     constructor(props)
     {
@@ -28,7 +40,30 @@ class TheaterManager extends React.Component {
     }
     render() {
         return(
-            <TheaterAdder></TheaterAdder>
+            <div>
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                    <li className="nav-item">
+                        <a className="nav-link active" id="home-tab" data-toggle="tab" href="#theaterlist" role="tab" aria-controls="home" aria-selected="true">Danh sách rạp</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#theateradder" role="tab" aria-controls="profile" aria-selected="false">Thêm rạp</a>
+                    </li>
+                    {/* <li className="nav-item">
+                        <a className="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Suất chiếu</a>
+                    </li> */}
+                </ul>
+                <div className="tab-content" id="myTabContent">
+                    <div className="tab-pane fade show active" id="theaterlist" role="tabpanel" aria-labelledby="home-tab">
+                        <TheaterList></TheaterList>
+                    </div>
+                    <div className="tab-pane fade" id="theateradder" role="tabpanel" aria-labelledby="profile-tab">
+                        <TheaterAdder></TheaterAdder>
+                    </div>
+                    {/* <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        {/* <SuatChieuManager></SuatChieuManager> */}
+                    {/* </div> */}
+                </div>
+            </div>
         )
     }
 }
@@ -103,7 +138,7 @@ class Manager extends React.Component {
                         <TheaterManager></TheaterManager>
                     </div>
                     <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        <SuatChieuManager></SuatChieuManager>
+                        {/* <SuatChieuManager></SuatChieuManager> */}
                     </div>
                 </div>
             </div>

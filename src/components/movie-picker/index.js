@@ -7,7 +7,6 @@ class MovieList extends React.Component {
                 cursor: "pointer",
                 filter:'brightness(1.15)',
                 transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
-
             },
             active:{
                 transform: "scale(1,1.01)",
@@ -91,12 +90,14 @@ export default class MoviePicker extends React.Component {
             inactiveButton:{
                 fontFamily:"monaco, Consolas, Lucida Console",
                 color:'white',
-                fontSize:"20px"
+                fontSize:"20px",
             }
 
         }
     }
-    
+    handleMouseIn(e) {
+        
+    }
     render() {
         return(
             <div className="m-5 p-5">
@@ -105,8 +106,8 @@ export default class MoviePicker extends React.Component {
                         Phim tại VGC
                     </h2>
                     <div className='ml-auto'>
-                        <button onClick={()=>this.setState({dangchieu:true})} className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Đang chiếu </button>
-                        <button onClick={()=>this.setState({dangchieu:false})} className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
+                        <button onClick={()=>this.setState({dangchieu:true})} onMouseEnter={e=>this.handleMouseIn(e)} className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton} >  Đang chiếu </button>
+                        <button onClick={()=>this.setState({dangchieu:false})} onMouseEnter={e=>this.handleMouseIn(e)}  className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
                         {/* <button onClick={()=>{this.setState({dangchieu:false}); console.log(this)}}>test</button> */}
                     </div>
                 </div>

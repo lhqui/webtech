@@ -8,7 +8,11 @@
     </head>
     <body style='background-color:black'>
         <template id='user'>
-            
+            <?php 
+                if($user != null) {
+                    echo "<div username=".$user->_data->username."></div>";
+                }
+            ?>
         </template>
         <custom-header>
         </custom-header>

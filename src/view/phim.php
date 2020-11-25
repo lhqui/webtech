@@ -21,7 +21,15 @@
                 $phim->template()
             ?>
         </template>
-        <custom-header></custom-header>
+        <custom-header>
+        <template id='user'>
+            <?php 
+                if($user != null) {
+                    echo "<div username=".$user->_data->username."></div>";
+                }
+            ?>
+        </template>
+        </custom-header>
         <movie-present></movie-present>
         <button data-toggle='modal' data-target='#ticket-buy'>Mua ngay</button>
         <ticket-buy>

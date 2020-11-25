@@ -4,7 +4,7 @@
     class Router {
         public function index() {
             $ds_phim = Phim::getAll();
-            // $user = new User();
+            $user = new User();
             include './view/home.php';
         }
         public function view($page) {
@@ -15,6 +15,7 @@
             include './view/admin.php';
         }
         public function phim($phim_id) {
+            $user = new User();
             if($phim_id==null) 
                 $phim = Phim::getAll();
             else

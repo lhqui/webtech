@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
  $GLOBALS['config'] = array(
     'mysql' => array(
         'servername' => '127.0.0.1',
@@ -12,7 +12,7 @@
         'password' => 'siliconvalley'
     ),
     'session' => array(
-        'user' => ''
+        'user' => 'username'
     )
 );
 require 'vendor/autoload.php';
