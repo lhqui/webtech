@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     11/10/2020 10:45:00 PM                       */
+/* Created on:     11/25/2020 10:58:10 AM                       */
 /*==============================================================*/
 
 
@@ -65,7 +65,7 @@ create table khuyenmai
 /*==============================================================*/
 create table loaisuatchieu
 (
-   loaisuatchieu_id     int not null,
+   loaisuatchieu_id     int not null auto_increment,
    loai_khunggio_start  int not null,
    loai_khunggio_end    int not null,
    loai_khungngay       int,
@@ -121,7 +121,7 @@ create table phong
 /*==============================================================*/
 create table rap
 (
-   rap_id               int not null,
+   rap_id               int not null auto_increment,
    rap_ten              varchar(50) not null,
    rap_diachi           varchar(200),
    primary key (rap_id)
