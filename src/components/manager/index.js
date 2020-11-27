@@ -4,31 +4,75 @@ class TheaterAdder extends React.Component {
     constructor(props) {
         super(props)
     }
-    handleSubmit() {
-        
+    handleSubmit(e) {
+        e.preventDefault()
+        $(e.currentTarget).ajaxSubmit(function(data) {
+            alert(data)
+        })
     }
     
     render() {
         return(
-            <form onSubmit={this.handleSubmit} className='form-group container w-50' id='movie_input_form' action='/functions/add_movie.php' method='post'>
+            <form onSubmit={e=>this.handleSubmit(e)} className='form-group container w-50' id='rap_input_form' action='/functions/add_theater.php' method='post'>
                     <h4>Thêm rạp</h4>
                     <label >Tên rạp</label>
                     <input type='text' name='rap_ten' className="form-control"></input>
                     <label >Địa chỉ rạp</label>
-                    <textarea form='movie_input_form' name='rap_diachi' className="form-control"></textarea>
+                    <textarea form='rap_input_form' name='rap_diachi' className="form-control"></textarea>
+                    <label>Số lượng phòng</label>
+                    <input type='number' min="1" max="10" name='phong_soluong'></input>
                     <button type='submit'>Thêm rạp</button>
             </form>
         )
     }
 }
-class TheaterList extends React.Component {
+class RoomList extends React.Component {
     constructor(props) {
         super(props)
     }
     render() {
         return(
             <div>
-                list
+                
+            </div>
+        )
+    }
+}
+class TheaterList extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            rapList:null
+        }
+        this.getRap()
+    }
+    createRapList(data) {
+        this.setState({rapList:data.map((e,i)=>{
+            return(
+                <div key={i}>
+                    <h4>{e._data.rap_ten}</h4>
+                    <button>Thêm phòng</button>
+                    <div id='phong'>
+                        <RoomList rap={e._data.rap_id}></RoomList>
+                    </div>
+                </div>
+            )
+        })})
+    }
+    getRap() {
+        var result
+        $.ajax({
+            url:'/functions/get_rap.php',  
+            success:(data) => {
+                result = JSON.parse(data)
+                this.createRapList(result)
+            }
+        })
+    }
+    render() {
+        return(
+            <div>
+                {this.state.rapList}
             </div>
         )
     }
@@ -75,12 +119,13 @@ class MovieAdder extends React.Component {
     handleSubmit(event) {
         event.preventDefault()
         $(event.target).ajaxSubmit(function(data){
+            console.log(data)
             alert(data)
         })
     }
     render() {
         return(
-            <form onSubmit={this.handleSubmit} className='form-group container w-50' id='movie_input_form' action='/functions/add_movie.php' method='post'>
+            <form onSubmit={(e)=>this.handleSubmit(e)} className='form-group container w-50' id='movie_input_form' action='/functions/add_movie.php' method='post'>
                     <h4>Thêm phim</h4>
                     <label >Tên phim</label>
                     <input type='text' name='phim_ten' className="form-control"></input>
