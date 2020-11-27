@@ -10,6 +10,9 @@
     'admin' => array(
         'username' => 'root',
         'password' => 'siliconvalley'
+    ),
+    'session' => array(
+        'user' => ''
     )
 );
 require 'vendor/autoload.php';

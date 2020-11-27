@@ -27,7 +27,7 @@ class MovieCarousel extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className={'container-fluid'}>
                 <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                     <ol className="carousel-indicators" >
                         {indicators}
@@ -43,7 +43,7 @@ class MovieCarousel extends React.Component {
                     <a className="carousel-control-next" style={{top:"400px",right:"30%"}} href="#carouselExampleIndicators" role="button" data-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="sr-only">Next</span>
-                    </a>
+                    </a> 
                 </div>
             </div>
         );

@@ -8,7 +8,10 @@ const template = dom.children[0].content.children[0]
     }
     render() {
         return(
-            <MoviePoster template={template} detail={true}></MoviePoster>
+            <div className="bg bg-primary" style={{backgroundColor:"red"}}>
+                <svg width="100%" ></svg>
+                <MoviePoster detail={true} template={template}></MoviePoster>
+            </div>
         )
     }
 }

@@ -13,54 +13,59 @@ class MovieList extends React.Component {
             
         // }
         super(props)
-        const newMovies = this.props.phim.map(function(i,elem){
-            return(
-                <img onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} 
-                onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
-            )
-        })
-        const style = {
+        this.style = {
+            normal: {
+                cursor: "pointer",
+                filter:'brightness(1.15)',
+                transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
+
+            },
             active:{
-                transform: "scale(1.05)",
-                boxShadow: "0px 0px 0px 10px rgba(255,255,255,1), 1px 11px 15px 10px rgba(0,0,0,0.4)",
+                transform: "scale(1,1.01)",
+                boxShadow: "0px 0px 0px 10px black, 1px 11px 15px 10px rgba(0,0,0,0.8)",
                 zIndex: "100",
                 opacity: "1",
+                cursor: "pointer",
+                filter:'brightness(1.5)',
+                transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
             },
-            blur:{  
+            blur:{
                 transform: "scale(0.9)",
-                boxShadow: "0px 0px 20px 10px rgba(255,255,255,1);",
+                boxShadow: "0px 0px 20px 10px black",
                 zIndex: "100",
-                opacity: "0.7",
-            }
+                opacity: "0.5",
+                transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
+            },
         }
         this.state = {
-            hover:false
+            hover:false,
+            currentHover:0
         }
-        function handleMouseIn(e) {
-            console.log(e)
-        }
-        function handleMouseOut(e) {
-            console.log(e)
-        }
-        this.movies = this.props.phim.map(function(i,elem){
+    }
+    createMovieList() {
+        this.movies = this.props.phim.map((i,elem)=>{
             return(
-                <div key={i}>
-                    <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{handleMouseIn(e)}} onMouseOver={(e) => {handleMouseOut(e)}} width={150} height={200} src={elem.querySelector('img#phim_anh').src} key={i}></img>
+                <div className="m-3 col-2 " style={{textAlign:'center'}} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e) => {this.handleMouseIn(e)}} key={i} style={!this.state.hover?this.style.normal:this.state.currentHover==i?this.style.active:this.style.blur}>
+                    <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}}  width={200} height={280} src={elem.querySelector('img#phim_anh').src} key={i} data-key={i}></img>
+                    <div className="text-white mt-3 d-flex justify-content-center">
+                        <h4>
+                            {elem.querySelector('#phim_ten').innerHTML}
+                        </h4>
+                    </div>
                 </div>
             )
         })
     }
-    
-    
-    // static getDerivedStateFromProps(nextProp) {
-    //     const newMovies = nextProp.phim.map(function(i,elem){
-    //         return(
-    //             <img  onClick={()=>{window.location.href='./phim/'+elem.id+''}} onMouseLeave={(e)=>{e.target.style.transform='scale(1)'}} onMouseOver={(e)=> { e.target.style.cursor='pointer'; e.target.style.transform='scale(1.3)' }} width={150} height={200} className='img-fluid' src={elem.querySelector('img#phim_anh').src} key={i}></img>
-    //         )
-    //     })
-    //     return {movies:newMovies}
-    // }
+    handleMouseIn(e) {
+        this.setState({currentHover:e.target.getAttribute('data-key')})
+        this.setState({hover:true})
+    }
+    handleMouseOut(e) {
+        this.setState({hover:false})
+        this.setState({currentHover:null})
+    }
     render() {
+        this.createMovieList()
         return(
             this.props.phim.length!=0 ? 
             <div className='row'>
@@ -81,8 +86,33 @@ export default class MoviePicker extends React.Component {
     constructor(props) {
         super(props)
         this.handleClick=this.handleClick.bind(this)
+       
         this.state = {
             dangchieu:true,
+        }
+        this.style = {
+            buttonClassName:"btn-primary-outline btn",
+            header: {
+                fontFamily:"monaco, Consolas, Lucida Console",
+                color:'white',
+                fontWeight: 'bold'
+            },
+            activeButton:{
+                fontFamily:"monaco, Consolas, Lucida Console",
+                color:'#34b4eb',
+                fontSize:"20px",
+                textDecoration: 'underline',
+                fontWeight: 'bold'
+            },
+            inactiveButton:{
+                fontFamily:"monaco, Consolas, Lucida Console",
+                color:'white',
+                fontSize:"20px",
+                fontWeight: 'bold',
+                opacity: "0.5"
+                
+            }
+
         }
     }
     handleClick(e) {
@@ -90,17 +120,18 @@ export default class MoviePicker extends React.Component {
         this.setState({dangchieu:e.target.getAttribute('dangchieu')==0?false:true}) 
         console.log(e.target.getAttribute('dangchieu'))
     }
+   
     
     render() {
         return(
-            <div className='container'>
+            <div className="m-5 p-5">
                 <div className='title row'>
-                    <h1 style={{color:'white'}}>
-                        Phim
-                    </h1>
-                    <div className='ml-auto'  >
-                        <button className="btn-primary-outline btn " dangchieu={1} onClick={(e)=>this.handleClick(e)} style={this.state.dangchieu?{backgroundColor:'red'}:{backgroundColor:'white'}}>  Đang chiếu </button>
-                        <button  dangchieu={0} onClick={(e)=>this.handleClick(e)} style={!this.state.dangchieu?{backgroundColor:'red'}:{backgroundColor:'white'}}>  Sắp chiếu </button>
+                    <h2 style={this.style.header}>
+                        Phim tại VGC
+                    </h2>
+                    <div className='ml-auto'>
+                        <button onClick={()=>this.setState({dangchieu:true})}  className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Đang chiếu </button>
+                        <button onClick={()=>this.setState({dangchieu:false})} className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
                         {/* <button onClick={()=>{this.setState({dangchieu:false}); console.log(this)}}>test</button> */}
                     </div>
                 </div>
