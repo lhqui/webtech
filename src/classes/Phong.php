@@ -20,5 +20,8 @@ class Phong {
             print_r($db->error());
         }
     }
+    public function pushSuatChieu($phim) {
+
+    }
 }
 ?>
