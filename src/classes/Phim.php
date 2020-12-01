@@ -37,6 +37,7 @@ class Phim {
     }
     public static function add($data) {
         $db = DB::getInstance();
+        
         if($db->insert('phim',$data)) 
             return true;
         else

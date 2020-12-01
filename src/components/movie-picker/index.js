@@ -18,7 +18,6 @@ class MovieList extends React.Component {
                 cursor: "pointer",
                 filter:'brightness(1.15)',
                 transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"
-
             },
             active:{
                 transform: "scale(1,1.01)",
@@ -109,7 +108,8 @@ export default class MoviePicker extends React.Component {
                 color:'white',
                 fontSize:"20px",
                 fontWeight: 'bold',
-                opacity: "0.5"
+                opacity: "0.5",
+                textDecoration: 'none'
                 
             }
 
@@ -122,6 +122,18 @@ export default class MoviePicker extends React.Component {
     }
    
     
+    handleMouseIn(e) {
+        console.log(e)
+        Object.assign(e.target.style,this.style.activeButton)
+    }
+    handleMouseOut(e) {
+        console.log(e)
+        if (!this.state.dangchieu && e.target.getAttribute('id')=='1') 
+            Object.assign(e.target.style,this.style.inactiveButton)
+            if (this.state.dangchieu && e.target.getAttribute('id')=='2') 
+            Object.assign(e.target.style,this.style.inactiveButton)
+        
+    }
     render() {
         return(
             <div className="m-5 p-5">
@@ -130,8 +142,8 @@ export default class MoviePicker extends React.Component {
                         Phim tại VGC
                     </h2>
                     <div className='ml-auto'>
-                        <button onClick={()=>this.setState({dangchieu:true})}  className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Đang chiếu </button>
-                        <button onClick={()=>this.setState({dangchieu:false})} className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
+                        <button id="1" onClick={()=>this.setState({dangchieu:true})} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e)=>{this.handleMouseIn(e)}} className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Đang chiếu </button>
+                        <button id="2" onClick={()=>this.setState({dangchieu:false})} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e)=>{this.handleMouseIn(e)}} className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
                         {/* <button onClick={()=>{this.setState({dangchieu:false}); console.log(this)}}>test</button> */}
                     </div>
                 </div>

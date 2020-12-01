@@ -6,7 +6,7 @@ class User {
     public function __construct($user = null) {
         $db = DB::getInstance();
         if(!$user) {
-            if(Session::exist('session/user')) {
+            if(Session::exist(Config::get('session/user'))) {
                 $userFind=self::find(Session::get(Config::get('session/user')));
                 if($userFind!=null) {
                     $this->_data = $userFind;
@@ -45,6 +45,9 @@ class User {
             }
         }
         return false;
+    }
+    public static function logout() {
+        Session::delete(Config::get('session/user'));
     }
 }
 ?>
