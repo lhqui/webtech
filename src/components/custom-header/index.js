@@ -107,7 +107,7 @@ class TheatreServices extends React.Component {
     }
     render() {
         return (
-            <div  style={{height:"450px", background: "-webkit-linear-gradient(left, rgb(0,50,0), rgb(0,50,0) 0%, rgba(0,0,0,1.2)) "}} className="row ">
+            <div  style={{height:"450px", background: "-webkit-linear-gradient(left, rgb(192,0,0), rgb(192,0,0) 0%, rgba(0,0,0,1.2)) "}} className="row ">
                  <div style={{backgroundColor:"",paddingTop:"10px"}} className="col-md-3 text-center">
                         <img src="https://picsum.photos/300/200"></img>
                         <div style={{paddingLeft:"40px"}} className="text-left">
