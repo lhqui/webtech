@@ -56,7 +56,7 @@ class UserDropdown extends React.Component {
         )
     }
 }
-const titleStyle = {fontSize:"30", color:"white", fontWeight:"bold", marginTop:"10px"}
+const titleStyle = {fontSize:"30", color:"white", fontWeight:"bold"}
 // const textStyle = {fontSize:"18", color:"white"}
 class TheatreVgc extends React.Component {
     constructor(props) {
