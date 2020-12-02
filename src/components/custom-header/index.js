@@ -107,7 +107,7 @@ class CustomHeader extends React.Component {
                         <button goto="phim" style={this.style.font} onClick={(e)=>{this.handleOnClick(e)}} id='phim' onMouseOut={this.handleMouseOut} onMouseEnter={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
                             Phim
                         </button>
-                        <button id='rap' style={this.style.font} onMouseOut={(e)=>this.handleMouseOut(e)} onMouseEnter={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
+                        <button id='rap' style={this.style.font}  onMouseEnter={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
                             Rạp
                         </button>
                         <button id='dichvu' style={this.style.font} onMouseOut={(e)=>this.handleMouseOut(e)} onMouseEnter={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
@@ -127,7 +127,7 @@ class CustomHeader extends React.Component {
                     <div id='phimDropDown' className={this.state.dropdown=='phim'?"dropdown open":"dropdown-menu close"}>
                         Phim
                     </div>
-                    <div id='rapDropDown' className={this.state.dropdown=='rap'?"dropdown open":"dropdown-menu"}>
+                    <div id='rapDropDown'  className={this.state.dropdown=='rap'?"dropdown open":"dropdown-menu"}>
                         Rạp
                     </div>
                     <div id='dichvuDropDown' className={this.state.dropdown=='dichvu'?"dropdown open":"dropdown-menu"} >

@@ -1,9 +1,9 @@
-<?php 
+<?php
+namespace Classes;
 require '../init.php';
-use Classes\SuatChieu;
 // $result=SuatChieu::get($_GET['movie'],$_GET['date']);
-print_r(array(
-    
-))
+if(Input::exist('get')) {
+    print_r(json_encode(SuatChieu::getAll($_GET['movie'],$_GET['date'])));
+}
 
 ?>

@@ -67,7 +67,7 @@ class DatePick extends React.Component {
         result.push({
             thu:lookup[date.getDay()],
             ngay:date.getDate(),
-            thang:date.getMonth(),
+            thang:date.getMonth()+1,
             nam:date.getFullYear()
         })
         var nextDay = new Date(date)
@@ -76,7 +76,7 @@ class DatePick extends React.Component {
             result.push({
                 thu:lookup[nextDay.getDay()],
                 ngay:nextDay.getDate(),
-                thang:nextDay.getMonth(),
+                thang:nextDay.getMonth()+1,
                 nam:nextDay.getFullYear()
             })
         }
@@ -104,18 +104,60 @@ class DatePick extends React.Component {
 class SuatChieuPick extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            suatchieu:null
+        }
+    }
+    createSuatChieu(data) {
+        if(data.length==0) {
+            this.setState({
+                suatchieu:
+                <div>
+                    Không có suất chiếu
+                </div>
+            })
+
+            return
+        }
+        this.setState({
+            suatchieu:data.map((e,i)=>{
+            return(
+                <div key={i}>
+                    {e._data.rap_id}
+                </div>
+            )})
+        })
+        // if(data.length==0) {
+        //     this.suatchieu = <div>
+        //         Không có suất chiếu
+        //     </div>
+        //     return
+        // }
+        // this.suatchieu = data.map((e,i)=>{
+        //     return(
+        //         <div key={i}>
+        //             {e._data.rap_id}
+        //         </div>
+        //     )
+        // })
     }
     getSuatChieu() {
         $.ajax({
             url:'/functions/get_suatchieu.php?movie='+this.props.movie+'&date='+this.props.date+''
-        }).done(function() {
-            
+        }).done((data) => {
+            this.createSuatChieu(JSON.parse(data))
         })
+    }
+    componentDidUpdate() {
+        this.getSuatChieu()
     }
     render() {
         return(
             <div>
                 <h4>Chọn suất chiếu</h4>
+                <div>
+                    {this.state.suatchieu}
+                </div>
             </div>
         )
     }

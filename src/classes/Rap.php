@@ -21,6 +21,11 @@ class Rap {
             }
         }
     }
+    public function getSuatChieu($phim,$ngay=null) {
+        if($ngay) {
+            
+        }
+    }
     public function makeSuatChieu() {
         
     }

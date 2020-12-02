@@ -13,6 +13,8 @@ class Phim {
         if($db->everythingOk()) {
             // lay du lieu
             $this->_data = $db->first();
+            $this->_data->phim_anhbia = base64_encode($this->_data->phim_anhbia);
+            $this->_data->phim_anh = base64_encode($this->_data->phim_anh);
             // phim dang chieu hay sap chieu ?
             $now = new \DateTime(date('Y-m-d'));
             $ngaychieu = new \DateTime($this->_data->phim_ngaychieu);        
@@ -22,7 +24,7 @@ class Phim {
                 $this->_dangchieu=1;
         }
     }
-    public static function getAll() {
+    public static function getAll($filter = null) {
         $movieList = array();
         $db = DB::getInstance();
         $db->get('phim');
