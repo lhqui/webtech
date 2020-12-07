@@ -9,6 +9,7 @@
     // Management system
     Macaw::get('manage','Classes\\Router@manage');
     Macaw::get('functions/(:any)','Classes\\Router@functions');
+    // Macaw::get('pictures/(:any)','Classes\\Router@pictures');
     Macaw::dispatch();
 ?>
 

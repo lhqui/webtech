@@ -58,12 +58,50 @@ class UserDropdown extends React.Component {
 }
 const titleStyle = {fontSize:"30", color:"white", fontWeight:"bold"}
 // const textStyle = {fontSize:"18", color:"white"}
+class MovieVgc extends React.Component {
+    constructor(props) {
+        super(props)
+        this.style= {
+            btnM : {fontFamily:"monaco, Consolas, Lucida Console",
+            fontSize:"25", 
+            fontWeight:"bold", 
+            color:"white",
+            marginTop:"40",
+            marginRight:"40px"
+            },
+            btnMuave: {
+                width:"200px",
+                fontFamily:"monaco, Consolas, Lucida Console",
+                fontSize:"25", 
+                fontWeight:"bold", 
+                color:"white",
+                marginTop:"40"
+            }
+            
+        }
+    }
+    render () {
+        return (
+            <div style={{height:"150px", background: "-webkit-linear-gradient(left, rgb(12,0,50), rgb(0,0,0) , rgba(0,0,0,1.2)) "}} className="row ">
+                <div style={{backgroundColor:""}} className="col-md-3 text-center">
+                    <button style={this.style.btnMuave} className="btn btn-danger rounded-pill" > Đặc Vé </button>
+                </div>
+                <div style={{backgroundColor:""}} className="col-md-9">
+                    <button style={this.style.btnM} className="btn btn-outline" > Đang chiếu </button>
+                    <button style={this.style.btnM} className="btn btn-outline" > Sắp chiếu</button>
+                </div>
+              
+            </div>
+        )
+    }
+}
 class TheatreVgc extends React.Component {
     constructor(props) {
         super(props) 
         this.style = {
             textStyle : {fontSize:"18", color:"white",display:"inline", paddingRight:"5px", marginTop:"10px"},
-            textStyleA : {fontSize:"18", color:"#34b4eb", paddingRight:"20px", cursor:"pointer", display:"inline"}
+            textStyleA : {fontSize:"18", color:"#34b4eb", paddingRight:"20px", cursor:"pointer", display:"inline"},
+            imgStyle: {width:"300", height:"200"}
         }
     }
     handleMouseIn(e) {
@@ -76,7 +114,7 @@ class TheatreVgc extends React.Component {
         return (
             <div style={{height:"450px", background: "-webkit-linear-gradient(left, rgb(49,0,74), rgb(49,0,74) 0%, rgba(0,0,0,1.2)) "}} className="row ">
                 <div style={{backgroundColor:"", paddingTop:"10px"}} className="col-md-3 text-center ">
-                        <img  src="https://picsum.photos/300/200"></img>
+                        <img style={this.style.imgStyle} src="https://i.ibb.co/dkK2Zh3/happy.jpg" ></img>
                         <div style={{paddingLeft:"40px"}} className="text-left">
                             <p style={titleStyle} >Xem Thông Tin Của Rạp</p>
                              <p style={this.style.textStyle}>Hãy chọn rạp gần với vị trí bạn nhất</p>
@@ -84,7 +122,7 @@ class TheatreVgc extends React.Component {
                         
                         <br></br>
                         <div  style={{paddingTop:"10px", paddingLeft:"40px"}}>
-                            <button style={{color:"white", fontSize:"20", fontWeight:"bold"}} className="btn btn-outline-primary rounded-pill text-center">Chọn Vị Trí Của Bạn</button>
+                            <button style={{color:"white", fontSize:"25", fontWeight:"bold"}} className="btn btn-danger rounded-pill text-center">Chọn Vị Trí Của Bạn</button>
                         </div>
                 </div>
                 <div style={{backgroundColor:""}} className="col-md-9">
@@ -104,12 +142,15 @@ const textStyleService = {fontSize:"18", color:"white",display:"inline", padding
 class TheatreServices extends React.Component {
     constructor(props) {
         super(props)
+        this.style = {
+            imgStyle: {width:"300", height:"200"}
+        }
     }
     render() {
         return (
-            <div  style={{height:"450px", background: "-webkit-linear-gradient(left, rgb(192,0,0), rgb(192,0,0) 0%, rgba(0,0,0,1.2)) "}} className="row ">
+            <div  style={{height:"450px", background: "-webkit-linear-gradient(left, rgb(69,162,158), rgb(69,162,158), rgba(0,0,0,1.2)) "}} className="row ">
                  <div style={{backgroundColor:"",paddingTop:"10px"}} className="col-md-3 text-center">
-                        <img src="https://picsum.photos/300/200"></img>
+                        <img style={this.style.imgStyle} src="https://i.ibb.co/qpwYTfS/pop.jpg"></img>
                         <div style={{paddingLeft:"40px"}} className="text-left">
                             <p style={titleStyle}>Tận Hưởng Bộ Phim Cùng Thực Đơn Nhanh</p>
                             <p style={textStyleService}>Xem qua những món ăn và thức uống có sẵn tại các rạp</p>
@@ -117,7 +158,7 @@ class TheatreServices extends React.Component {
                        
                 </div>
                     <div style={{paddingTop:"10px"}} className="col-md-3 text-left">
-                             <button style={{color:"white", fontSize:"20", fontWeight:"bold"}} className="btn btn-outline-primary rounded-pill">Xem Thực Đơn</button>
+                             <button style={{color:"white", fontSize:"25", fontWeight:"bold"}} className="btn btn-danger rounded-pill">Xem Thực Đơn</button>
                     </div>
             </div>
        
@@ -146,7 +187,7 @@ class CustomHeader extends React.Component {
                 fontSize:'20px'
             },
             hoveredFont: {
-                color:'#34b4eb',
+                color:' 34b4eb',
                 fontFamily:"monaco, Consolas, Lucida Console",
                 fontSize:'20px'
             }
@@ -178,7 +219,7 @@ class CustomHeader extends React.Component {
                         <button style={this.style.font} goto="" onClick={(e)=>{this.handleOnClick(e)}} className={buttonClassName}>VGC</button>
                     </div>
                     <div id="button">
-                        <button goto="phim" style={this.style.font} onClick={(e)=>{this.handleOnClick(e)}} id='phim' onMouseLeave={this.handleMouseOut} onMouseOver={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
+                        <button goto="phim" id="phim" style={this.state.dropdown=="phim"?this.style.fontA:this.style.font} onClick={(e)=>{this.handleOnClick(e)}}  onMouseOver={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
                             Phim
                         </button>
                         <button id='rap' style={this.state.dropdown=="rap"?this.style.fontA:this.style.font}  onMouseOver={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
@@ -198,8 +239,8 @@ class CustomHeader extends React.Component {
                 </div>
                 
                 <div id="content" className="container-fluid bg-primary" >
-                    <div id='phimDropDown' className={this.state.dropdown=='phim'?"dropdown open":"dropdown-menu close"}>
-                        Phim
+                    <div id='phimDropDown' onMouseLeave={(e)=>this.handleMouseOut(e)} className={this.state.dropdown=='phim'?"dropdown open":"dropdown-menu close"}>
+                        <MovieVgc></MovieVgc>
                     </div>
                     <div id='rapDropDown' onMouseLeave={(e)=>this.handleMouseOut(e)} className={this.state.dropdown=='rap'?"dropdown open":"dropdown-menu"}>
                         <TheatreVgc></TheatreVgc>

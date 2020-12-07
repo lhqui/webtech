@@ -25,5 +25,8 @@
         public function functions($page) {
             include './functions/'.$page.".php";
         }
+        // public function pictures($img) {
+        //     include './pictures/'.$img;
+        // }
     }
 ?>
