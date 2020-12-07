@@ -21,6 +21,21 @@ class Rap {
             }
         }
     }
+    public function getSuatChieu($phim,$ngay=null) {
+        $db = DB::getInstance();
+        $result = [];
+        $result['rap'] = $this;
+        $result['suat'] = [];
+        if($ngay) {
+            $db->query('select * from suatchieu where DATE(suatchieu_thoidiem) = ? and phim_id = ? and rap_id=?',array($ngay,$phim,$this->_data->rap_id));
+            if($db->everythingOk()) {
+                foreach($db->result() as $suatchieu) {
+                    array_push($result['suat'], new SuatChieu($suatchieu->rap_id,$suatchieu->phong_stt,$suatchieu->suatchieu_thoidiem));
+                }
+            }
+        }
+        return $result;
+    }
     public function makeSuatChieu() {
         
     }

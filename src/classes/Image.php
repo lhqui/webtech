@@ -19,7 +19,7 @@ class Image {
         }
     }
     static function img($longblob) {
-        return "data:image/png;base64,"    . base64_encode($longblob) ;
+        return "data:image/png;base64,"    . ($longblob) ;
 
     }
 }
