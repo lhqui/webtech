@@ -4,7 +4,6 @@ class SuatChieu {
     public $_data,
         $_phim,
         $_isFull,
-        
         $_isDangChieu,
         $_end;
     public function __construct($rap_id,$phong_stt,$suatchieu_thoidiem) {
@@ -37,6 +36,23 @@ class SuatChieu {
             <suat-chieu id='".$this->_data->suatchieu_id."'></suat-chieu>
         ";
     }
+    public function checkGhe($row,$col,$uname) {
+        // 0=available 1=taken 2=taken by me
+        $db=DB::getInstance();
+        $query=$db->query('select * from ve where rap_id=? and phong_stt=? and suatchieu_thoidiem=? and ghe_hang=? and ghe_stt=?',array(
+            $this->_data->rap_id,$this->_data->phong_stt,$this->_data->suatchieu_thoidiem,$row,$col
+        ));
+        if($db->count()==0) {
+            return 0;
+        }
+        else {
+            if($query->first()->username==$uname) {
+                return 2;
+            }
+            else
+                return 1;
+        }
+    }
     public static function getAll($phim,$ngay) {
         $result = [];
         $db=DB::getInstance();
@@ -62,6 +78,7 @@ class SuatChieu {
         else
             return false;
     }
+
 }
 
 ?>

@@ -16,10 +16,9 @@
         }
         public function phim($phim_id) {
             $user = new User();
-            if($phim_id==null) 
-                $phim = Phim::getAll();
-            else
+            $ds_phim = Phim::getAll();
                 $phim = new Phim($phim_id);
+
             include './view/phim.php';
         }
         public function functions($page) {

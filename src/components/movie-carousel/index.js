@@ -41,8 +41,8 @@ class MovieCarousel extends React.Component {
                     </a>
                     
                     <a className="carousel-control-next" style={{top:"400px",right:"30%"}} href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Next</span>
+                        <span className="carousel-control-next-icon"  aria-hidden="true"></span>
+                        <span style={{color:'red'}} className="sr-only">Next</span>
                     </a> 
                 </div>
             </div>

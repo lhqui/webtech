@@ -20,7 +20,7 @@
         <movie-carousel>
             <template>
                 <?php
-                    for ($i = 0; $i < 5; $i ++) {
+                    for ($i = 0; $i < 3; $i ++) {
                         $ds_phim[$i]->template();
                     }
                 ?>

@@ -16,12 +16,35 @@ class Chair extends React.Component {
             },
             active: {
                 backgroundColor:'red'
+            },
+            taken: {
+                height: '20px',
+                width: '25px',
+                borderRadius: '30% 30% 0 0 ',
+                display: 'inline-block',
+                textAlign:'center',
+                cursor:'pointer',
+                margin:'5px',
+                color:'black',
+                backgroundColor:'yellow'
+            },
+            mine: {
+                height: '20px',
+                width: '25px',
+                borderRadius: '30% 30% 0 0 ',
+                display: 'inline-block',
+                textAlign:'center',
+                cursor:'pointer',
+                margin:'5px',
+                color:'black',
+                backgroundColor:'green'
             }
             
         }
         this.state = {
             hover:false,
-            select:false
+            select:false,
+            status:null
         }
     }
     mouseIn(e) {
@@ -38,12 +61,11 @@ class Chair extends React.Component {
         else {
             Object.assign(e.target.style,this.style.normal)
         }
-
         this.props.selectGhe(this.props.row,this.props.col)
     }
     render() {
         return(
-            <div style={this.style.normal} onClick={e=>this.onClick(e)} onMouseOut={e=>this.mouseOut(e)} onMouseEnter={e=>this.mouseIn(e)}>
+            <div style={this.props.status==0?this.style.normal:this.props.status==1?this.style.taken:this.style.mine} onClick={e=>this.onClick(e)} onMouseOut={e=>this.mouseOut(e)} onMouseEnter={e=>this.mouseIn(e)}>
                 {this.state.hover ? this.props.row+this.props.col : null}
             </div>
         )
@@ -57,31 +79,68 @@ class ChairPick extends React.Component {
             col:[1,2,3,4,5,6,7,8,9,10]
         }
     }
-    createChairMap() {
-        this.chairMap = this.seat.row.map((i,e)=>{
+    createChairMap(data) {
+        var result = []
+        for(var i = 0;i<5;i++) {
+            result[i]=[]
+            for(var j=i*10;j<(i*10)+10;j++) {
+                result[i].push(data[j])
+            }
+        }
+        this.chairMap = result.map((i,e)=>{
             return(
-                <div key={i} className={'d-flex'}>
-                {this.seat.col.map((i2,e2)=>{
-                    if(e2==0)
-                        return(
-                            <div key={i+i2} className=''>
-                                <p style={{color:'white',display:'inline',position:'absolute',left:'10px'}}>{i}</p>
-                                <Chair selectGhe={this.props.selectGhe} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id} row={i} col={i2} key={i+i2} ></Chair>
-                            </div>
-                        )
-                    else
-                        return(
-                            <div key={i+i2}>
-                                <Chair selectGhe={this.props.selectGhe} row={i} col={i2}  key={i+i2} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id}></Chair>
-                            </div>
-                        )
-                })}
+                <div key={e} className='d-flex'>
+                    {
+                        i.map((i2,e2)=>{
+                            if(e2==0)
+                                return(
+                                    <div key={e+e2} className=''>
+                                        <p style={{color:'white',display:'inline',position:'absolute',left:'10px'}}>{e}</p>
+                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id} row={i2.row} col={i2.col} key={this.props.suatchieu_thoidiem+this.props.rap_id+e+e2} ></Chair>
+                                    </div>
+                                )
+                            else
+                                return(
+                                    <div key={e+e2}>
+                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} row={i2.row} col={i2.col}  key={this.props.suatchieu_thoidiem+this.props.rap_id+e+e2} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id}></Chair>
+                                    </div>
+                                )
+                            })
+                    }
                 </div>
             )
         })
     }
+    checkGhe() {
+        if(this.props.phong_stt==null || this.props.suatchieu_thoidiem==null) {
+            return
+        }
+        const rap_id = this.props.rap_id
+        const phong_stt = this.props.phong_stt
+        const suatchieu_thoidiem = this.props.suatchieu_thoidiem
+        $.ajax({
+            url:'/functions/check_ghe.php',
+            data:{
+                rap_id:rap_id,
+                phong_stt:phong_stt,
+                suatchieu_thoidiem:suatchieu_thoidiem,
+            },
+            method:'post'
+        }).done(data=>{
+            this.createChairMap(JSON.parse(data))
+            
+        })
+    }
+    componentDidUpdate() {
+        this.checkGhe()
+
+        this.interval = setInterval(this.checkGhe,5000)
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+    
     render() {
-        this.createChairMap()
         return(
             <div className={'container-fluid h-50 w-100'} >
                 <div className='mr-auto'>
@@ -216,7 +275,8 @@ class SuatChieuPick extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            chosen:null
+            chosen:null,
+            data:null
         }
         this.style = {
             normal:{
@@ -268,7 +328,7 @@ class SuatChieuPick extends React.Component {
         }
         // backend
         this.setState({chosen:e.currentTarget.getAttribute('data-key')})
-        this.props.selectSuat(e.currentTarget.getAttribute('rap_id'),e.currentTarget.getAttribute('phong'),e.currentTarget.getAttribute('thoidiem'),e.currentTarget.getAttribute('rap_ten'))
+        this.props.selectSuat(e.currentTarget.getAttribute('rap_id'),e.currentTarget.getAttribute('phong'),e.currentTarget.getAttribute('thoidiem'),e.currentTarget.getAttribute('rap_ten'),e.currentTarget.getAttribute('gio_chieu'))
     }
     createSuatChieu(data) {
         this.suatchieu = data.map((e1,i)=>{
@@ -281,7 +341,7 @@ class SuatChieuPick extends React.Component {
                     <div className='d-flex'>
                         {e1.suat.map((e,i)=>{
                             return(
-                                <div data-key={e._data.rap_id+i}  rap_ten={e1.rap._data.rap_ten} rap_id={e._data.rap_id} phong={e._data.phong_stt} thoidiem={e._data.suatchieu_thoidiem} onClick={e=>this.handleClick(e)} className="m-0 p-0 mb-3" style={this.state.chosen!=null?this.state.chosen==e._data.rap_id+i?this.style.activeButton:this.style.blur:this.style.normal} key={i} onMouseLeave={e=>{this.mouseOut(e)}} onMouseEnter={(e)=>{this.mouseEnter(e)}}>
+                                <div data-key={e._data.rap_id+i} gio_chieu={e._data.suatchieu_thoidiem.slice(11,16)}  rap_ten={e1.rap._data.rap_ten} rap_id={e._data.rap_id} phong={e._data.phong_stt} thoidiem={e._data.suatchieu_thoidiem} onClick={e=>this.handleClick(e)} className="m-0 p-0 mb-3" style={this.state.chosen!=null?this.state.chosen==(e._data.rap_id+i)?this.style.activeButton:this.style.blur:this.style.normal} key={i} onMouseLeave={e=>{this.mouseOut(e)}} onMouseEnter={(e)=>{this.mouseEnter(e)}}>
                                         <p className="p-0 m-0" style={{fontFamily:"monaco, Consolas, Lucida Console",padding:'none'}}>{e._data.suatchieu_thoidiem.slice(11,16)}</p>
                                         <div className="p-0 m-0">
                                             <div style={{display:'inline'}}>
@@ -315,11 +375,16 @@ class SuatChieuPick extends React.Component {
             url:'/functions/get_suatchieu.php?movie='+this.props.movie+'&date='+this.props.date+''
         }).done((data) => {
             this.createSuatChieu(JSON.parse(data))
+            this.setState({
+                data:JSON.parse(data)
+            })
         })
     }
-    componentDidUpdate(prevProp) {
+    componentDidUpdate(prevProp,prevState) {
         if(this.props.date!=prevProp.date)
             this.getSuatChieu()
+        if(this.state.chosen!=prevState.chosen)
+            this.createSuatChieu(this.state.data)
     }
     render() {
         return(
@@ -344,6 +409,7 @@ class TicketBuy extends React.Component {
         this.selectGhe = this.selectGhe.bind(this)
         this.selectGhe = this.selectGhe.bind(this)
         this.chonGheSwitch = this.chonGheSwitch.bind(this)
+        this.datVe=this.datVe.bind(this)
         this.style = {
             modal:{
                 backgroundColor:'black',
@@ -362,6 +428,7 @@ class TicketBuy extends React.Component {
             ds_ghe:[],
             thoidiem:null
         }
+        this.chairMap = React.createRef()
     }
     selectDate(date) {
         if(date!=null) {
@@ -372,7 +439,7 @@ class TicketBuy extends React.Component {
             this.setState({date:null})
         }
     }
-    selectSuat(rap_id,phong_stt,suatchieu_thoidiem,rap_ten) {
+    selectSuat(rap_id,phong_stt,suatchieu_thoidiem,rap_ten,gio) {
         if(arguments.length == 1) {
             this.setState({
                 suatchieu:null
@@ -380,11 +447,19 @@ class TicketBuy extends React.Component {
             return
         }
         this.setState({
+            rap_id:rap_id,
+            phong_stt:phong_stt
+        })
+        this.setState({
+            ds_ghe:[]
+        })
+        this.setState({
             suatchieu:{
                 rap:rap_id,
                 phong:phong_stt,
                 thoidiem:suatchieu_thoidiem,
-                rap_ten:rap_ten
+                rap_ten:rap_ten,
+                gio:gio
             }
         })
     }
@@ -402,13 +477,34 @@ class TicketBuy extends React.Component {
                 col:col
             })
         }
-        console.log(newState)
         this.setState({
             ds_ghe:newState
         })
     }
     datVe() {
-        
+        const rap_id=this.state.suatchieu.rap
+        const phong_stt=this.state.suatchieu.phong
+        const suatchieu_thoidiem = this.state.suatchieu.thoidiem
+        const muave_soluong = this.state.ds_ghe.length
+        var gheString = ''
+        this.state.ds_ghe.forEach(e=>{
+            gheString += e.row+e.col
+        })
+        $.ajax({
+            url:'/functions/dat_ve.php',
+            method:'post',
+            data: {
+                rap_id:rap_id,
+                phong_stt:phong_stt,
+                suatchieu_thoidiem:suatchieu_thoidiem,
+                muave_soluong:muave_soluong,
+                muave_tongtien:phim.querySelector('#phim_gia').innerHTML*muave_soluong,
+                gheString:gheString
+            }
+        }).done(data=>{
+            alert(data)
+            this.chairMap.current.getGhe()
+        })
     }
     chonGheSwitch() {
         this.setState({
@@ -438,8 +534,8 @@ class TicketBuy extends React.Component {
                                 </div>
                             </div>
                             <div className={'p-0'} style={{display:!this.state.chon_ghe?'none':''}}>
-                                <ChairPick  suatchieu_thoidiem={this.state.suatchieu_thoidiem} rap_id={this.state.rap_id} phong_stt={this.state.phong_stt} phim_id={phim.getAttribute('id')} selectGhe={this.selectGhe}></ChairPick>
-                                {this.state.thoidiem&&this.state.suatchieu&&<div style={{position:'absolute',left:'50%',bottom:'1%',paddingTop:'15px',paddingRight:'10px'}} className=" w-50 h-100">
+                                <ChairPick  ref={this.chairMap} suatchieu_thoidiem={this.state.suatchieu!=null&&this.state.suatchieu.thoidiem} rap_id={this.state.rap_id} phong_stt={this.state.phong_stt} phim_id={phim.getAttribute('id')} selectGhe={this.selectGhe}></ChairPick>
+                                {this.state.thoidiem&&this.state.suatchieu&&<div style={{position:'absolute',left:'50%',bottom:'1%',paddingTop:'15px',paddingRight:'10px'}} className=" w-50 h-100"  >
                                     <h5>
                                         Thông tin vé
                                     </h5>
@@ -447,8 +543,9 @@ class TicketBuy extends React.Component {
                                         <p>Phim: {phim.querySelector('h4#phim_ten').innerHTML}</p>
                                         <p>Rạp: {this.state.suatchieu.rap_ten}</p>
                                         <p>Phòng: {this.state.suatchieu.phong}</p>
-                                        <p>Ngày chiếu: {this.state.thoidiem.thu}, {this.state.thoidiem.ngay+"-"+this.state.thoidiem.thang+"-"+this.state.thoidiem.nam}</p>
-                                        <p>Giá vé: {phim.querySelector('#phim_gia').innerHTML}</p>
+    <p>Ngày chiếu: {this.state.thoidiem.thu}, {this.state.thoidiem.ngay+"-"+this.state.thoidiem.thang+"-"+this.state.thoidiem.nam}</p>
+    <p>Giờ chiếu: {this.state.suatchieu.gio}</p>
+                                        <p>Giá vé: {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(phim.querySelector('#phim_gia').innerHTML)}</p>
                                         {this.state.ds_ghe.length!=0&&
                                             <div>
                                                 <p>Danh sách ghế: {this.state.ds_ghe.map((e,i)=>{
@@ -456,7 +553,7 @@ class TicketBuy extends React.Component {
                                                         e.row+e.col+" "
                                                     )
                                                 })}</p>
-                                                <p>Tổng cộng: {this.state.ds_ghe.length} x {phim.querySelector('#phim_gia').innerHTML} đ = {this.state.ds_ghe.length * phim.querySelector('#phim_gia').innerHTML}</p>
+                                                <p>Tổng cộng: {this.state.ds_ghe.length} x {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(phim.querySelector('#phim_gia').innerHTML)}= {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(this.state.ds_ghe.length * phim.querySelector('#phim_gia').innerHTML)}</p>
                                             </div>}
                                     </div>
                                 </div>}
@@ -467,7 +564,7 @@ class TicketBuy extends React.Component {
                                 <div className='container-fluid d-flex justify-content-between'>
                                     <button style={{color:'white',fontFamily:"monaco, Consolas, Lucida Console", fontSize:"18px",transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"}} className={"btn btn-primary-outline p-1 mr-auto"} onMouseEnter={e=>{Object.assign(e.target.style,{borderBottom:"solid 1px #34b4eb",color:'#34b4eb'})}} onMouseLeave={e=>{Object.assign(e.target.style,{border:'none',color:'white'})}} onClick={e=>{this.setState({chon_ghe:false})}} >Quay lại</button>
                                     {this.state.ds_ghe.length!=0  &&
-                                        <button style={{color:'white',fontFamily:"monaco, Consolas, Lucida Console", fontSize:"18px",transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"}} className={"btn btn-primary-outline p-1"} onMouseEnter={e=>{Object.assign(e.target.style,{borderBottom:"solid 1px #34b4eb",color:'#34b4eb'})}} onMouseLeave={e=>{Object.assign(e.target.style,{border:'none',color:'white'})}}>Đặt vé</button>
+                                        <button style={{color:'white',fontFamily:"monaco, Consolas, Lucida Console", fontSize:"18px",transition:"opacity 0.4s linear, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out"}} className={"btn btn-primary-outline p-1"} onMouseEnter={e=>{Object.assign(e.target.style,{borderBottom:"solid 1px #34b4eb",color:'#34b4eb'})}} onMouseLeave={e=>{Object.assign(e.target.style,{border:'none',color:'white'})}} onClick={this.datVe}>Đặt vé</button>
                                     }
                                 </div>
                             }

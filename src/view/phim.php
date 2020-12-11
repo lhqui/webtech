@@ -6,6 +6,7 @@
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src='/components/movie-present/index.js'></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src='/components/ticket-buy/index.js'></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/footer/index.js"></script>
+        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-picker/index.js"></script>
 
         <script>
                 $(document).ready(function(){
@@ -46,6 +47,18 @@
                     ?>
                 </template>
         </ticket-buy>
+
+        <div class="mt-5">
+            <movie-picker>
+                <template>
+                    <?php
+                        foreach($ds_phim as $phim) {
+                            $phim->template();
+                        }
+                    ?>
+                </template>
+            </movie-picker>
+        </div>
         
         <div>
             <footer></footer>
