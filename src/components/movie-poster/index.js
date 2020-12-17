@@ -22,7 +22,7 @@ const imgDetail = {
                     }
 const poster = {width:"350px", height:"300px", display:"block",}
 const btnstyle = {position:"absolute",top:"70%", left:"10%", width:"200px", color:"#34b4eb", height:"50" }
-const btnDatve = {fontSize:'18px',color:"#34b4eb", width:"300px", position:"absolute", top:"60%", right:"5%",backgroundColor:'#d12a2a' }
+const btnDatve = {fontSize:'18px',color:"", width:"300px", position:"absolute", top:"60%", right:"5%",backgroundColor:'' }
 export default class MoviePoster extends React.Component {
     constructor(props) {
         super(props)
@@ -31,7 +31,7 @@ export default class MoviePoster extends React.Component {
                 width: "100%",
                 height: "500px",
                 position: "relative",
-                backgroundColor:'white',
+                backgroundColor:'',
                 opacity:'1',
                 margin:'auto',
             },
@@ -40,7 +40,7 @@ export default class MoviePoster extends React.Component {
                 opacity:'1.2',
                 width: "100%",
                 position:"absolute",
-                background: "-webkit-linear-gradient(left, rgba(0,0,0,1.8) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100% ) "
+                background: "-webkit-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100% ) "
             },
             fadeIn: {
                 height: "100%",
@@ -82,8 +82,8 @@ export default class MoviePoster extends React.Component {
                             {/* {this.props.template.querySelector('#phim_thoiluong').innerHTML} phút */}
                         </h6>
                         <div className='row pl-2'>
-{                        this.props.template.getAttribute('data-dangchieu')==0 &&    <button style={{backgroundColor:'#d12a2a'}} onClick={()=>{window.location.href='/phim/'+ this.props.template.id}} className='btn  text-white btn-outline-none rounded-pill'>Xem chi tiết</button>}
-{                          this.props.template.getAttribute('data-dangchieu') == 1 &&          <button style={{backgroundColor:'#d12a2a'}} onClick={()=>{window.location.href='./phim/'+ this.props.template.id}}   className='btn  text-white btn-outline-none rounded-pill'>Đặt vé ngay</button>}
+{                        this.props.template.getAttribute('data-dangchieu')==0 &&    <button style={{filter:"brightness(50%)"}} onClick={()=>{window.location.href='/phim/'+ this.props.template.id}} className='btn   btn-danger rounded-pill'>Xem chi tiết</button>}
+{                          this.props.template.getAttribute('data-dangchieu') == 1 &&          <button style={{filter:"brightness(50%)"}} onClick={()=>{window.location.href='./phim/'+ this.props.template.id}}   className='btn  btn-danger rounded-pill'>Đặt vé ngay</button>}
                             {/* {this.props.template.getAttribute('data-dangchieu')==1?
                             <button className="btn btn-outline-primary rounded-pill" style={btnstyle} onClick={()=>{window.location.href='./phim/'+ this.props.template.id}}><p style={{color:"white", margin:"auto"}}>Xem chi tiết</p></button> 
                         :<p>Ngày chiếu: {this.props.template.querySelector('#phim_ngaychieu').innerHTML}</p>
@@ -111,7 +111,7 @@ export default class MoviePoster extends React.Component {
                 <div>
                     {this.props.detail && 
                     <div>
-                    <button onClick={e=>this.handleOnDatVe(e)} className='btn btn-outline-none rounded-pill'  style={btnDatve}><p style={{color:"white", margin:"auto", maxWidth:"auto"}}>Đặt vé</p></button>
+                    <button onClick={e=>this.handleOnDatVe(e)} className='btn btn-danger rounded-pill'  style={btnDatve}><p style={{color:"", margin:"auto", maxWidth:"auto"}}>Đặt vé</p></button>
                     </div>
                     }
                 </div>

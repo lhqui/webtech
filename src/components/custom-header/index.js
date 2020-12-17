@@ -69,6 +69,13 @@ class MovieVgc extends React.Component {
             marginTop:"40",
             marginRight:"40px"
             },
+            btnMA : {fontFamily:"monaco, Consolas, Lucida Console",
+            fontSize:"25", 
+            fontWeight:"bold", 
+            color:"#34b4eb",
+            marginTop:"40",
+            marginRight:"40px"
+            },
             btnMuave: {
                 width:"200px",
                 fontFamily:"monaco, Consolas, Lucida Console",
@@ -80,15 +87,21 @@ class MovieVgc extends React.Component {
             
         }
     }
+    handleMouseIn(e) {
+        Object.assign(e.target.style, this.style.btnMA)
+    }
+    handleMouseOut(e) {
+        Object.assign(e.target.style, this.style.btnM)
+    }
     render () {
         return (
             <div style={{height:"150px", background: "-webkit-linear-gradient(left, rgb(12,0,50), rgb(0,0,0) , rgba(0,0,0,1.2)) "}} className="row ">
                 <div style={{backgroundColor:""}} className="col-md-3 text-center">
-                    <button style={this.style.btnMuave} className="btn btn-danger rounded-pill" > Đặc Vé </button>
+                    <button style={this.style.btnMuave} className="btn btn-danger rounded-pill" > Đặt Vé </button>
                 </div>
                 <div style={{backgroundColor:""}} className="col-md-9">
-                    <button style={this.style.btnM} className="btn btn-outline" > Đang chiếu </button>
-                    <button style={this.style.btnM} className="btn btn-outline" > Sắp chiếu</button>
+                    <button style={this.style.btnM} onMouseEnter={(e)=> {this.handleMouseIn(e)}} onMouseLeave={(e)=>{this.handleMouseOut(e)}} className="btn btn-outline" > Đang chiếu </button>
+                    <button style={this.style.btnM} onMouseEnter={(e)=> {this.handleMouseIn(e)}} onMouseLeave={(e)=>{this.handleMouseOut(e)}} className="btn btn-outline" > Sắp chiếu</button>
                 </div>
               
             </div>
@@ -165,13 +178,43 @@ class TheatreServices extends React.Component {
             )
     }
 }
+class SearchPopup extends React.Component {
+    constructor(props) {
+        super(props)
+        this.style = {
+            boxContain :{ height:'', width:'', backgroundColor:"red", position:'',display:'', marginTop:'' },
+            box: {height:'auto', width:'70%', position:'relative', background:'blue', overfloow:'auto'},
+            boxResult :{height:'300px', backgroundColor:"blue",  marginTop:''}
+
+        }
+        
+    }
+
+    render () {
+        return (
+            <div className='card' style={{border:'none'}}>
+                <div className='card-body' style={this.style.boxContain}>
+                    <form className='form-inline d-flex justify-content-center md-form form-sm mt-0'>
+                        <i className='fas fa-search' aria-hidden='true'></i>
+                        <input className='form-control form-control-sm ml-3 w-75' type='text' placeholder='search' ara-label='search'></input>
+                    </form>
+                </div>
+            
+            <div className='card-body' style={this.style.boxResult}>
+
+            </div>
+            </div>
+        )    
+    }
+}
 
 class CustomHeader extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            dropdown:''
+            dropdown:'',
+            popUp: false,
         }
         this.handleMouseIn = this.handleMouseIn.bind(this)
         this.handleMouseOut = this.handleMouseOut.bind(this)
@@ -190,29 +233,53 @@ class CustomHeader extends React.Component {
                 color:' 34b4eb',
                 fontFamily:"monaco, Consolas, Lucida Console",
                 fontSize:'20px'
-            }
+            },
+            boxContain :{ height:'700px', width:'500px', backgroundColor:"blue", position:'fixed',display:'' },
         }
     }
     
     handleMouseIn(e) {
         const id = e.target.id
         this.setState({dropdown:id})
-        Object.assign(e.target.style,this.style.hoveredFont)
+        Object.assign(e.target.style,this.style.hoveredFont) 
+        
         // console.log(e.target.style.color)
     }
     handleMouseOut(e) {
         this.setState({dropdown:''})
         e.target.classList.remove('bg-primary')
         Object.assign(e.target.style,this.style.font)
+
+        
     }
     handleOnClick(e) {
         const goto = e.target.getAttribute('goto')
         const redirect = window.location.hostname + "/" + goto
         window.location.assign("/./"+goto) 
     }
+    handleOnSearch() {
+        this.setState({popUp: !this.state.popUp})
+        console.log('1')
+    }
     render() {
         const buttonClassName = "btn-primary-outline btn"
         return(
+        <div>
+            {this.state.popUp?
+            <div className='fixed-top text-center' style={{backgroundColor:'black'}}>
+                <div className="list-inline">
+                    <div className='list-inline-item' style={{backgroundColor:'green'}}>
+                        <button style={this.style.font} goto="" onClick={(e)=>{this.handleOnClick(e)}} className={buttonClassName}>VGC</button>
+                    </div>
+                    <div className='list-inline-item' style={{backgroundColor:'blue', width:'1200px'}}>
+                        <SearchPopup></SearchPopup>
+                    </div>
+                    <i className="fas fa-times list-inline-item" style={{color:'white',backgroundColor:'red'}} onClick={()=>{this.handleOnSearch()}}></i>
+                </div>
+
+
+            </div>
+            :
             <div className={'fixed-top'} style={{backgroundColor:'black'}}>
                 <div className="d-flex flex-row justify-content-between align-items-center">
                     <div>
@@ -228,7 +295,18 @@ class CustomHeader extends React.Component {
                         <button id='dichvu' style={this.state.dropdown=="dichvu"?this.style.fontA:this.style.font} onMouseOver={(e)=>{this.handleMouseIn(e)}} className={buttonClassName}>
                             Dịch vụ
                         </button>
+                        {/* <button onClick={()=>{this.handleOnSearch()}} onMouseOut={(e)=>this.handleMouseOut(e)} onMouseEnter={(e)=>{this.handleMouseIn(e)}} style={this.style.font} className={buttonClassName}>time kiem</button> */}
+
+                        {/* {this.state.popUp?
+                        <div style={this.style.boxContain} >
+                            <SearchPopup   show={this.state.popUp}></SearchPopup>
+                        </div>
+                         
+                        :
+                        <button onClick={()=>{this.handleOnSearch()}} onMouseOut={(e)=>this.handleMouseOut(e)} onMouseEnter={(e)=>{this.handleMouseIn(e)}} style={this.style.font} className={buttonClassName}>time kiem</button>
+                        } */}
                     </div>
+                
                     <div className=''>
                         {$(user).is('br')?
                         <button onMouseOut={(e)=>this.handleMouseOut(e)} onMouseEnter={(e)=>{this.handleMouseIn(e)}} style={this.style.font} className={buttonClassName} data-toggle='modal' data-target='#userModal'>Đăng nhập</button>
@@ -250,6 +328,8 @@ class CustomHeader extends React.Component {
                     </div>
                 </div>
             </div>
+                    }
+        </div>
         )
     }
 }

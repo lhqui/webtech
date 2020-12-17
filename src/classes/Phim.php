@@ -60,6 +60,21 @@ class Phim {
             return $ds_rap;
         }
     }
+    public function searhPhim($ten) {
+        $ds_searched = array();
+        $db=DB::getInstance();
+        $db->query("select * from phim where phim_ten like '%(?)%'", array($ten));
+        if($db->everythingOk())
+        {
+            foreach($db->result() as $result) 
+            {
+                print_r($result);
+                $phim = new Phim($result->phim_id);
+                array_push($ds_searched, $phim);
+            }
+            return $ds_searched ;
+        }
+    }
     public function template() {
         echo "
             <div data-dangchieu='".$this->_dangchieu."' class='phim' id='".$this->_data->phim_id."'>

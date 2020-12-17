@@ -88,6 +88,7 @@ export default class MoviePicker extends React.Component {
        
         this.state = {
             dangchieu:true,
+            onSearch:'',
         }
         this.style = {
             buttonClassName:"btn-primary-outline btn",
@@ -118,21 +119,40 @@ export default class MoviePicker extends React.Component {
     handleClick(e) {
 
         this.setState({dangchieu:e.target.getAttribute('dangchieu')==0?false:true}) 
-        console.log(e.target.getAttribute('dangchieu'))
+        // console.log(e.target.getAttribute('dangchieu'))
     }
    
     
     handleMouseIn(e) {
-        console.log(e)
+        // console.log(e)
         Object.assign(e.target.style,this.style.activeButton)
     }
     handleMouseOut(e) {
-        console.log(e)
+        // console.log(e)
         if (!this.state.dangchieu && e.target.getAttribute('id')=='1') 
             Object.assign(e.target.style,this.style.inactiveButton)
             if (this.state.dangchieu && e.target.getAttribute('id')=='2') 
             Object.assign(e.target.style,this.style.inactiveButton)
         
+    }
+    handleSearch(e) {
+        if(e.target.value != '') {
+            // this.setState({onSearch:''+ e.target.value})
+           let preValue = this.state.onSearch
+           let nextValue = preValue + e.target.value
+            $.ajax({
+                url:'/functions/search_phim.php',
+                method:'post',
+                dataType:'html',
+                data:{ten : nextValue}
+            }).done(data=>{
+                console.log(data)
+                this.searh_data = data
+                
+            })
+        } else {
+            this.setState({onSearch: ''})
+        }
     }
     render() {
         return(
@@ -142,6 +162,7 @@ export default class MoviePicker extends React.Component {
                         Phim tại VGC
                     </h2>
                     <div className='ml-auto'>
+                        <input onChange={(e=>{this.handleSearch(e)})}></input>
                         <button id="1" onClick={()=>this.setState({dangchieu:true})} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e)=>{this.handleMouseIn(e)}} className={this.style.buttonClassName} style={this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Đang chiếu </button>
                         <button id="2" onClick={()=>this.setState({dangchieu:false})} onMouseLeave={(e)=>{this.handleMouseOut(e)}} onMouseOver={(e)=>{this.handleMouseIn(e)}} className={this.style.buttonClassName} style={!this.state.dangchieu?this.style.activeButton:this.style.inactiveButton}>  Sắp chiếu </button>
                         {/* <button onClick={()=>{this.setState({dangchieu:false}); console.log(this)}}>test</button> */}
@@ -149,7 +170,9 @@ export default class MoviePicker extends React.Component {
                 </div>
                 <hr style={{border:'0'},{clear:'both'},{backgroundColor:'white'}}></hr>
                 <div className='mt-5'>
-                    <MovieList phim={this.state.dangchieu?phimdangchieu:phimsapchieu}></MovieList>
+                    <MovieList phim={this.state.onSearch==''?this.state.dangchieu?phimdangchieu:phimsapchieu:this.search_data}></MovieList>
+                    {/* <MovieList phim={this.state.dangchieu?phimdangchieu:phimsapchieu}></MovieList> */}
+
                 </div>
             </div>
             )

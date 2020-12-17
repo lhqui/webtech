@@ -16,6 +16,13 @@
             ?>
         </template>
         <custom-header>
+            <template>
+                <?php
+                    foreach($ds_phim as $phim) {
+                        $phim->template();
+                    }
+                ?>
+            </template>
         </custom-header>
         <movie-carousel>
             <template>
