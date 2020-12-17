@@ -16,7 +16,8 @@ class UserDropdown extends React.Component {
                 right:"17px",
                 width:"190px",
                 padding:'5px',
-                textAlign:"right"
+                textAlign:"right",
+                listStyleType:'none'
             },
             hidden: {
                 display:"none"
@@ -49,7 +50,7 @@ class UserDropdown extends React.Component {
                 </svg>
                 <button onMouseEnter={()=>this.setState({dropdown:true})} className={this.style.class} style={this.style.font} >{this.props.user.getAttribute('username')}   <span className="caret"></span></button>
                 <ul style={this.state.dropdown?this.style.dropdown:this.style.hidden} >
-                    <li ><button onMouseEnter={(e)=>{Object.assign(e.target.style,{color:'#34b4eb'})}} onMouseOut={(e)=>{Object.assign(e.target.style,{color:'white'})}} style={this.style.buttonStyle} className="btn btn-primary-outline">Quản lý tài khoản</button></li>
+                    <li ><button onMouseEnter={(e)=>{Object.assign(e.target.style,{color:'#34b4eb'})}} onMouseOut={(e)=>{Object.assign(e.target.style,{color:'white'})}} style={this.style.buttonStyle} className="btn btn-primary-outline" data-toggle={'modal'} data-target={'#userTicket'} onClick={()=>{$('#userTicket').modal('show')}}>Thông tin vé</button></li>
                     <li ><button onClick={this.logout} onMouseEnter={(e)=>{Object.assign(e.target.style,{color:'#34b4eb'})}} onMouseOut={(e)=>{Object.assign(e.target.style,{color:'white'})}} style={this.style.buttonStyle} className="btn btn-primary-outline">Đăng xuất</button></li>
                 </ul>
             </div>

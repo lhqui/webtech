@@ -4,6 +4,7 @@ class Chair extends React.Component {
         super(props)
         this.style = {
             normal: {
+                fontFamily:"monaco, Consolas, Lucida Console",
                 height: '20px',
                 width: '25px',
                 backgroundColor: 'white',
@@ -15,9 +16,7 @@ class Chair extends React.Component {
                 color:'black'
             },
             active: {
-                backgroundColor:'red'
-            },
-            taken: {
+                fontFamily:"monaco, Consolas, Lucida Console",
                 height: '20px',
                 width: '25px',
                 borderRadius: '30% 30% 0 0 ',
@@ -28,13 +27,26 @@ class Chair extends React.Component {
                 color:'black',
                 backgroundColor:'yellow'
             },
-            mine: {
+            taken: {
+                fontFamily:"monaco, Consolas, Lucida Console",
                 height: '20px',
                 width: '25px',
                 borderRadius: '30% 30% 0 0 ',
                 display: 'inline-block',
                 textAlign:'center',
-                cursor:'pointer',
+                cursor:'not-allowed',
+                margin:'5px',
+                color:'black',
+                backgroundColor:'#424242'
+            },
+            mine: {
+                fontFamily:"monaco, Consolas, Lucida Console",
+                height: '20px',
+                width: '25px',
+                borderRadius: '30% 30% 0 0 ',
+                display: 'inline-block',
+                textAlign:'center',
+                cursor:'help',
                 margin:'5px',
                 color:'black',
                 backgroundColor:'green'
@@ -48,25 +60,36 @@ class Chair extends React.Component {
         }
     }
     mouseIn(e) {
+        if(this.props.status==1) {
+            return
+        }
         this.setState({hover:true})
     }
     mouseOut(e) {
         this.setState({hover:false})
     }
     onClick(e) {
-       this.setState({select:!this.state.select})
-        if(!this.state.select) {
-            Object.assign(e.target.style,this.style.active)
+        if(this.props.status!=0) {
+            return
         }
-        else {
-            Object.assign(e.target.style,this.style.normal)
-        }
+        this.setState({select:!this.state.select})
         this.props.selectGhe(this.props.row,this.props.col)
+    }
+    componentDidUpdate(oldprop) {
+        if(this.props.status!=oldprop.status) {
+            this.setState({
+                select:false
+            })
+        }
     }
     render() {
         return(
-            <div style={this.props.status==0?this.style.normal:this.props.status==1?this.style.taken:this.style.mine} onClick={e=>this.onClick(e)} onMouseOut={e=>this.mouseOut(e)} onMouseEnter={e=>this.mouseIn(e)}>
-                {this.state.hover ? this.props.row+this.props.col : null}
+            <div style={this.props.status==0?this.state.select?this.style.active:this.style.normal:this.props.status==1?this.style.taken:this.style.mine} onClick={e=>this.onClick(e)} onMouseLeave={e=>this.mouseOut(e)} onMouseEnter={e=>this.mouseIn(e)}>
+                {this.state.hover||this.state.select ? this.props.row+this.props.col : null}
+                {this.props.status!=0 && this.props.status!=1 &&
+                    <span style={{visibility: this.state.hover?"visible":"hidden",color:'black', width: '120px', backgroundColor: 'white', textAlign: 'center', padding: '5px 0', borderRadius: '6px', position: 'absolute', zIndex: '1'}}>
+                        {this.props.status!=1&&this.props.row+this.props.col+"-Bạn đã đặt vào "+this.props.status}
+                    </span>}
             </div>
         )
     }
@@ -74,9 +97,13 @@ class Chair extends React.Component {
 class ChairPick extends React.Component {
     constructor(props) {
         super(props)
+        this.checkGhe = this.checkGhe.bind(this)
         this.seat = {
             row:['A','B','C','D','E'],
             col:[1,2,3,4,5,6,7,8,9,10]
+        }
+        this.state = {
+            data:null
         }
     }
     createChairMap(data) {
@@ -96,13 +123,13 @@ class ChairPick extends React.Component {
                                 return(
                                     <div key={e+e2} className=''>
                                         <p style={{color:'white',display:'inline',position:'absolute',left:'10px'}}>{e}</p>
-                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id} row={i2.row} col={i2.col} key={this.props.suatchieu_thoidiem+this.props.rap_id+e+e2} ></Chair>
+                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id} row={i2.row} col={i2.col} key={this.props.suatchieu_thoidiem+this.props.rap_id+e+e2+i2.status} ></Chair>
                                     </div>
                                 )
                             else
                                 return(
                                     <div key={e+e2}>
-                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} row={i2.row} col={i2.col}  key={this.props.suatchieu_thoidiem+this.props.rap_id+e+e2} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id}></Chair>
+                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} row={i2.row} col={i2.col}  key={i2.status+this.props.suatchieu_thoidiem+this.props.rap_id+e+e2} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id}></Chair>
                                     </div>
                                 )
                             })
@@ -110,6 +137,9 @@ class ChairPick extends React.Component {
                 </div>
             )
         })
+    }
+    componentDidMount() {
+        this.interval = setInterval(this.checkGhe,5000)
     }
     checkGhe() {
         if(this.props.phong_stt==null || this.props.suatchieu_thoidiem==null) {
@@ -126,15 +156,23 @@ class ChairPick extends React.Component {
                 suatchieu_thoidiem:suatchieu_thoidiem,
             },
             method:'post'
-        }).done(data=>{
-            this.createChairMap(JSON.parse(data))
-            
+        }).done(data1=>{
+            const data= JSON.parse(data1)
+            var result = []
+        for(var i = 0;i<5;i++) {
+            result[i]=[]
+            for(var j=i*10;j<(i*10)+10;j++) {
+                result[i].push(data[j])
+            }
+        }
+        this.setState({data:result})
+            // this.createChairMap(JSON.parse(data))          
         })
     }
-    componentDidUpdate() {
-        this.checkGhe()
-
-        this.interval = setInterval(this.checkGhe,5000)
+    componentDidUpdate(oldprop) {
+        if(oldprop!=this.props) {
+            this.checkGhe()
+        }
     }
     componentWillUnmount() {
         clearInterval(this.interval)
@@ -148,7 +186,29 @@ class ChairPick extends React.Component {
                         Màn hình
                     </div>
                     <div  className='w-50'>
-                        {this.chairMap}
+                        {this.state.data!=null&&this.state.data.map((i,e)=>{
+            return(
+                <div key={e} className='d-flex'>
+                    {
+                        i.map((i2,e2)=>{
+                            if(e2==0)
+                                return(
+                                    <div key={e+e2} className=''>
+                                        <p style={{color:'white',display:'inline',position:'absolute',left:'10px'}}>{e}</p>
+                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id} row={i2.row} col={i2.col} key={this.props.suatchieu_thoidiem+this.props.rap_id+e+e2+i2.status} ></Chair>
+                                    </div>
+                                )
+                            else
+                                return(
+                                    <div key={e+e2}>
+                                        <Chair status={i2.status} selectGhe={this.props.selectGhe} row={i2.row} col={i2.col}  key={i2.status+this.props.suatchieu_thoidiem+this.props.rap_id+e+e2} rap_id={this.props.rap_id} phong_stt={this.props.phong_stt} suatchieu_thoidiem={this.props.suatchieu_thoidiem} phim_id={this.props.phim_id}></Chair>
+                                    </div>
+                                )
+                            })
+                    }
+                </div>
+            )
+        })}
                     </div>
                     <div className='d-flex justify-content-around w-50 pr-3'>
                         {this.seat.col.map((i,e)=>{
@@ -358,7 +418,7 @@ class SuatChieuPick extends React.Component {
                                                     <path d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z"/>
                                                     <path fillRule="evenodd" d="M2 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
                                                 </svg>
-                                                <p style={{display:'inline',margin:'none',padding:'none',fontSize:'12px',marginLeft:'3px'}}>5</p>
+                                                <p style={{display:'inline',margin:'none',padding:'none',fontSize:'12px',marginLeft:'3px'}}>{e._veRemain}</p>
                                             </div>
                                         </div>
                                 </div>
@@ -503,7 +563,9 @@ class TicketBuy extends React.Component {
             }
         }).done(data=>{
             alert(data)
-            this.chairMap.current.getGhe()
+            this.setState({
+                ds_ghe:[]
+            })
         })
     }
     chonGheSwitch() {
@@ -535,25 +597,44 @@ class TicketBuy extends React.Component {
                             </div>
                             <div className={'p-0'} style={{display:!this.state.chon_ghe?'none':''}}>
                                 <ChairPick  ref={this.chairMap} suatchieu_thoidiem={this.state.suatchieu!=null&&this.state.suatchieu.thoidiem} rap_id={this.state.rap_id} phong_stt={this.state.phong_stt} phim_id={phim.getAttribute('id')} selectGhe={this.selectGhe}></ChairPick>
-                                {this.state.thoidiem&&this.state.suatchieu&&<div style={{position:'absolute',left:'50%',bottom:'1%',paddingTop:'15px',paddingRight:'10px'}} className=" w-50 h-100"  >
-                                    <h5>
+                                <div style={{fontFamily:"monaco, Consolas, Lucida Console"}}>
+                                    <div className='row w-50 pl-5'>
+                                        <div style={{height:'20px',width:'25px',backgroundColor:'green',borderRadius:'30% 30% 0 0'}}></div>
+                                        <p className="col-6" style={{display:'inline'}}>Ghế của bạn</p>
+                                    </div>
+                                    <div className='row w-50 pl-5'>
+                                        <div style={{height:'20px',width:'25px',backgroundColor:'#424242',borderRadius:'30% 30% 0 0'}}></div>
+                                        <p className="col-6" style={{display:'inline'}}>Ghế đã đặt</p>
+                                    </div>
+                                    <div className='row w-50 pl-5'>
+                                        <div style={{height:'20px',width:'25px',backgroundColor:'white',borderRadius:'30% 30% 0 0'}}></div>
+                                        <p className="col-6" style={{display:'inline'}}>Ghế trống</p>
+                                    </div>
+                                    <div className='row w-50 pl-5'>
+                                        <div style={{height:'20px',width:'25px',backgroundColor:'yellow',borderRadius:'30% 30% 0 0'}}></div>
+                                        <p className="col-6" style={{display:'inline'}}>Ghế đang chọn</p>
+                                    </div>
+
+                                </div>
+                                {this.state.thoidiem&&this.state.suatchieu&&<div style={{fontFamily:"monaco, Consolas, Lucida Console",position:'absolute',left:'50%',bottom:'1%',paddingTop:'15px',paddingRight:'10px'}} className=" w-50 h-100"  >
+                                    <h5 style={{textAlign:'center',color:'#34b4eb',fontWeight:'bold'}}>
                                         Thông tin vé
                                     </h5>
                                     <div>
-                                        <p>Phim: {phim.querySelector('h4#phim_ten').innerHTML}</p>
-                                        <p>Rạp: {this.state.suatchieu.rap_ten}</p>
-                                        <p>Phòng: {this.state.suatchieu.phong}</p>
-    <p>Ngày chiếu: {this.state.thoidiem.thu}, {this.state.thoidiem.ngay+"-"+this.state.thoidiem.thang+"-"+this.state.thoidiem.nam}</p>
-    <p>Giờ chiếu: {this.state.suatchieu.gio}</p>
-                                        <p>Giá vé: {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(phim.querySelector('#phim_gia').innerHTML)}</p>
+                                        <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Phim:</span> {phim.querySelector('h4#phim_ten').innerHTML}</p>
+                                        <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Rạp:</span> {this.state.suatchieu.rap_ten}</p>
+                                        <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Phòng:</span> {this.state.suatchieu.phong}</p>
+    <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Ngày chiếu: </span> {this.state.thoidiem.thu}, {this.state.thoidiem.ngay+"-"+this.state.thoidiem.thang+"-"+this.state.thoidiem.nam}</p>
+    <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Giờ chiếu:  </span>{this.state.suatchieu.gio}</p>
+                                        <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Giá vé:</span> {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(phim.querySelector('#phim_gia').innerHTML)}</p>
                                         {this.state.ds_ghe.length!=0&&
                                             <div>
-                                                <p>Danh sách ghế: {this.state.ds_ghe.map((e,i)=>{
+                                                <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Danh sách ghế: </span>{this.state.ds_ghe.map((e,i)=>{
                                                     return(
                                                         e.row+e.col+" "
                                                     )
                                                 })}</p>
-                                                <p>Tổng cộng: {this.state.ds_ghe.length} x {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(phim.querySelector('#phim_gia').innerHTML)}= {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(this.state.ds_ghe.length * phim.querySelector('#phim_gia').innerHTML)}</p>
+                                                <p><span style={{color:'#34b4eb',fontWeight:'bold'}}>Tổng cộng:</span> {this.state.ds_ghe.length} x {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(phim.querySelector('#phim_gia').innerHTML)} = <span style={{color:'#34b4eb'}}> {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(this.state.ds_ghe.length * phim.querySelector('#phim_gia').innerHTML)}</span></p>
                                             </div>}
                                     </div>
                                 </div>}
