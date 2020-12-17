@@ -5,6 +5,9 @@ class SuatChieu {
         $_phim,
         $_isFull,
         $_isDangChieu,
+        $_veRemain,
+        $_isPassed,
+        $_viTri,
         $_end;
     public function __construct($rap_id,$phong_stt,$suatchieu_thoidiem) {
         $db = DB::getInstance();
@@ -13,6 +16,8 @@ class SuatChieu {
         if($db->everythingOk()) {
             // lay du lieu
             $this->_data = $db->first();
+            // $rap= new Rap($this->_data->rap_id);
+            $this->_viTri = "Phòng " . $this->_data->phong_stt ." ". $this->getRapName(); 
             // // get phim
             $this->_phim = new Phim($this->_data->phim_id);
             // check if dangchieu
@@ -24,12 +29,28 @@ class SuatChieu {
             if($now>date('Y-m-d H:i:s',$start) && $now<date('Y-m-d H:i:s',$end)) {
                 $this->_isDangChieu = true;
             }
-            else
+            else{
                 $this->_isDangChieu=false;
+                if($now < date('Y-m-d H:i:s',$start)) {
+                    $this->_isPassed = false;
+                }
+                else {
+                    $this->_isPassed = true;
+                }
+            }
             // check if full
+            $db->query('select count(*) as result from ve where rap_id = ? and phong_stt = ? and suatchieu_thoidiem=?',array($this->_data->rap_id,$this->_data->phong_stt,$this->_data->suatchieu_thoidiem));
+            $veCount = $db->first()->result;
+            $this->_isFull=$veCount==50?true:false;
+            $this->_veRemain=50-$veCount;
         }
         else
             print_r('error');
+    }
+    private function getRapName() {
+        $db=DB::getInstance();
+        $db->get('rap',array('rap_id','=',$this->_data->rap_id));
+        return $db->first()->rap_ten;
     }
     public function template() {
         echo "
@@ -47,7 +68,9 @@ class SuatChieu {
         }
         else {
             if($query->first()->username==$uname) {
-                return 2;
+                $timeQuery = $db->query('select * from muave where username=? and muave_stt=?',array($uname,$query->first()->muave_stt));
+                $time = $timeQuery->first()->muave_thoidiem;
+                return $time;
             }
             else
                 return 1;
