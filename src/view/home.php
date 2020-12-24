@@ -1,11 +1,13 @@
 <html>
     <head>
         <?php include 'header.php'?>
-        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/custom-header/index.js"></script>
+        <script crossorigin src="https://cdn.jsdelivr.net/npm/react-animated-slider@2.0.0/build/index.min.js"></script>        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/custom-header/index.js"></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src='/components/movie-poster/index.js'></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-carousel/index.js"></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-picker/index.js"></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/footer/index.js"></script>
+    
+    
     </head>
     <body style='background-color:black'>
         <template id='user'>

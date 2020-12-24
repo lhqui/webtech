@@ -39,11 +39,11 @@ class Phim {
     }
     public static function add($data) {
         $db = DB::getInstance();
-        
-        if($db->insert('phim',$data)) 
+        $result = $db->insert('phim',$data);
+        if($result)
             return true;
         else
-            return false;
+            return $db->errorMsg();
     }
     public function getAllRap() {
         // Select tất cả rạp có chiếu phim này

@@ -5,6 +5,7 @@
 
     Macaw::get('/','Classes\\Router@index');
     Macaw::get('view/(:any)','Classes\\Router@view');
+    Macaw::get('phim','Classes\\Router@phimAll');
     Macaw::get('phim/(:any)','Classes\\Router@phim');
     // Management system
     Macaw::get('manage','Classes\\Router@manage');

@@ -7,11 +7,9 @@
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src='/components/ticket-buy/index.js'></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/footer/index.js"></script>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-picker/index.js"></script>
-
         <script>
                 $(document).ready(function(){
                     $("#button1").click(function(){
-                        console.log('ye')
                         $("#ticket-buy").modal({backdrop: true});
                     });
                 });

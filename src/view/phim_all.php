@@ -2,23 +2,32 @@
     <head>
         <?php include 'header.php'?>
         <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/custom-header/index.js"></script>
+        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src='/components/movie-poster/index.js'></script>
+        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-carousel/index.js"></script>
+        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/movie-picker/index.js"></script>
+        <script data-plugins="transform-es2015-modules-umd" type='text/babel' src="/components/footer/index.js"></script>
     </head>
     <body style='background-color:black'>
-        <template id='phim'>
+    <template id='user'>
             <?php 
-                $phim->template()
+                if($user != null) {
+                    echo "<div username=".$user->_data->username."></div>";
+                }
             ?>
         </template>
-        <custom-header></custom-header>
-        <movie-present></movie-present>
-        <button data-toggle='modal' data-target='#ticket-buy'>Mua ngay</button>
-        <ticket-buy>
+        <custom-header>
+        </custom-header>
+        <div class="mt-5">
+            <movie-picker>
                 <template>
-                    <?php 
-                        $phim->getAllRap()
+                    <?php
+                        foreach($ds_phim as $phim) {
+                            $phim->template();
+                        }
                     ?>
                 </template>
-        </ticket-buy>
-        <!-- <custom-footer></custom-footer> -->
+            </movie-picker>
+        </div>
+        <footer></footer>
     </body>
 </html>

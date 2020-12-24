@@ -14,10 +14,15 @@
             $ds_phim = Phim::getAll();
             include './view/admin.php';
         }
+        public function phimAll() {
+            $user = new User();
+            $ds_phim = Phim::getAll();
+            include './view/phim_all.php';
+        }
         public function phim($phim_id) {
             $user = new User();
             $ds_phim = Phim::getAll();
-                $phim = new Phim($phim_id);
+            $phim = new Phim($phim_id);
 
             include './view/phim.php';
         }

@@ -29,7 +29,6 @@ class UserTicket extends React.Component {
         clearInterval(this.interval)
     }
     getVe() {
-        console.log('called getVe()')
         $.ajax({
             url:'/functions/get_ve.php',
             method:'get',

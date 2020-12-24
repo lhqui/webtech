@@ -68,7 +68,6 @@ export default class MoviePoster extends React.Component {
 
         return(
             <div >
-               
                 <div style={!this.props.detail?imgOut:imgDetail} >
                     <div style={this.props.detail?this.style.fadeIn:this.style.fadeOut}></div>
                     <img className={"h-100 w-100 d-block border border-secondary"} src={this.props.template.querySelector('img#phim_anhbia').src}></img>
